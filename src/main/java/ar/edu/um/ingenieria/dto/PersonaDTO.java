@@ -1,7 +1,9 @@
 package ar.edu.um.ingenieria.dto;
 
+import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class PersonaDTO {
 	
@@ -13,9 +15,8 @@ public class PersonaDTO {
 	@NotNull
 	@Size(min=2,max=50)	
 	private String nombre;
-	@NotNull
-	@Size(min=1,max=2)
-	private Integer edad;
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private Date fechaNacimiento;
 	@NotNull
 	private UsuarioDTO usuario;
 
@@ -43,12 +44,12 @@ public class PersonaDTO {
 		this.nombre = nombre;
 	}
 
-	public Integer getEdad() {
-		return edad;
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
 	}
 
-	public void setEdad(Integer edad) {
-		this.edad = edad;
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
 	}
 
 	public UsuarioDTO getUsuario() {
@@ -61,8 +62,8 @@ public class PersonaDTO {
 
 	@Override
 	public String toString() {
-		return "PersonaDTO [id=" + id + ", apellido=" + apellido + ", nombre=" + nombre + ", edad=" + edad
-				+ ", usuario=" + usuario + "]";
+		return "PersonaDTO [id=" + id + ", apellido=" + apellido + ", nombre=" + nombre + ", fechaNacimiento="
+				+ fechaNacimiento + ", usuario=" + usuario + "]";
 	}
 
 	public PersonaDTO() {

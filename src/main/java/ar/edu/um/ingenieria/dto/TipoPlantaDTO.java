@@ -4,20 +4,19 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class ClimaDTO {
-
+public class TipoPlantaDTO {
 	private Integer id;
-	
+
 	@NotNull
 	@Size(min=2,max=45)
 	private String nombre;
-	
+
 	@NotNull
 	@Size(min=2,max=255)
 	private String descripcion;
-	
+
 	private List<PlantaDTO> plantasDTO;
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -52,11 +51,7 @@ public class ClimaDTO {
 
 	@Override
 	public String toString() {
-		return "ClimaDTO [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", plantasDTO="
+		return "TipoPlantaDTO [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", plantasDTO="
 				+ plantasDTO + "]";
-	}
-	
-	public ClimaDTO() {
-		super();
 	}
 }

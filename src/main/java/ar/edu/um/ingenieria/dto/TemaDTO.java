@@ -1,13 +1,33 @@
 package ar.edu.um.ingenieria.dto;
 
+import java.util.Date;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class TemaDTO {	
-	private Integer id;	
+	
+	private Integer id;
+	
 	@NotNull
-	@Size(min=3,max=120)
-	private String nombre;
+	@Size(min=2,max=45)
+	private String titulo;
+	
+	private UsuarioDTO usuarioDTO;
+
+	private Boolean cerrado;
+	
+	@NotNull
+	@Size(min=2,max=255)
+	private String texto;
+	
+	private CategoriaDTO categoriaDTO;
+	
+	private List<RespuestaDTO> respuestasDTO;
+	
+	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
+	private Date fecha;
 	
 	public Integer getId() {
 		return id;
@@ -15,44 +35,54 @@ public class TemaDTO {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getNombre() {
-		return nombre;
+	public String getTitulo() {
+		return titulo;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
-		return result;
+	public UsuarioDTO getUsuarioDTO() {
+		return usuarioDTO;
 	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		TemaDTO other = (TemaDTO) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (nombre == null) {
-			if (other.nombre != null)
-				return false;
-		} else if (!nombre.equals(other.nombre))
-			return false;
-		return true;
+	public void setUsuarioDTO(UsuarioDTO usuarioDTO) {
+		this.usuarioDTO = usuarioDTO;
 	}
+	public Boolean getCerrado() {
+		return cerrado;
+	}
+	public void setCerrado(Boolean cerrado) {
+		this.cerrado = cerrado;
+	}
+	public String getTexto() {
+		return texto;
+	}
+	public void setTexto(String texto) {
+		this.texto = texto;
+	}
+	public CategoriaDTO getCategoriaDTO() {
+		return categoriaDTO;
+	}
+	public void setCategoriaDTO(CategoriaDTO categoriaDTO) {
+		this.categoriaDTO = categoriaDTO;
+	}
+	public List<RespuestaDTO> getRespuestasDTO() {
+		return respuestasDTO;
+	}
+	public void setRespuestasDTO(List<RespuestaDTO> respuestasDTO) {
+		this.respuestasDTO = respuestasDTO;
+	}
+	public Date getFecha() {
+		return fecha;
+	}
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+	
 	@Override
 	public String toString() {
-		return "Tema [id=" + id + ", nombre=" + nombre + "]";
+		return "TemaDTO [id=" + id + ", titulo=" + titulo + ", usuarioDTO=" + usuarioDTO + ", cerrado=" + cerrado
+				+ ", texto=" + texto + ", categoriaDTO=" + categoriaDTO + ", respuestasDTO=" + respuestasDTO
+				+ ", fecha=" + fecha + "]";
 	}
 	public TemaDTO() {
 		super();

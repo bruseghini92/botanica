@@ -1,67 +1,131 @@
 package ar.edu.um.ingenieria.dto;
 
 import java.sql.Date;
-
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class PlantaDTO {
 	
 	private Integer id;
 	@NotNull
 	@Size(min=2,max=45)
 	private String nombre;
-	@NotNull 
-	private Date mesInicio;
-	@NotNull 
-	private Date mesFin;
-	@NotNull 	
-	@Size(max=512)
+
+	@NotNull
+	@Size(min=2,max=255)
 	private String descripcion;
-	@NotNull 
-	private SueloDTO suelo;
-	@NotNull 
-	private ClimaDTO clima;
+
+	private TipoPlantaDTO tipoDTO;
+
+	private TemporadaDTO temporadaDTO;
+
+	private SueloDTO sueloDTO;
+
+	private ClimaDTO climaDTO;
+
+	@DateTimeFormat(pattern = "HH:mm:ss")
+	private Date tiempoRiego;
+	
+	private List<SeguimientoDTO> seguimientoDTO;
+	
+	@Override
+	public String toString() {
+		return "PlantaDTO [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", temporadaDTO="
+				+ temporadaDTO + ", sueloDTO=" + sueloDTO + ", climaDTO=" + climaDTO + ", tiempoRiego=" + tiempoRiego
+				+ ", seguimientoDTO=" + seguimientoDTO + "]";
+	}
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Date getMesInicio() {
-		return mesInicio;
+
+
+	public String getNombre() {
+		return nombre;
 	}
-	public void setMesInicio(Date mesInicio) {
-		this.mesInicio = mesInicio;
+
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
-	public Date getMesFin() {
-		return mesFin;
-	}
-	public void setMesFin(Date mesFin) {
-		this.mesFin = mesFin;
-	}
+
+
 	public String getDescripcion() {
 		return descripcion;
 	}
+
+
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public SueloDTO getSuelo() {
-		return suelo;
+
+
+	public TipoPlantaDTO getTipoDTO() {
+		return tipoDTO;
 	}
-	public void setSuelo(SueloDTO suelo) {
-		this.suelo = suelo;
+
+
+	public void setTipoDTO(TipoPlantaDTO tipoDTO) {
+		this.tipoDTO = tipoDTO;
 	}
-	public ClimaDTO getClima() {
-		return clima;
+
+
+	public TemporadaDTO getTemporadaDTO() {
+		return temporadaDTO;
 	}
-	public void setClima(ClimaDTO clima) {
-		this.clima = clima;
+
+
+	public void setTemporadaDTO(TemporadaDTO temporadaDTO) {
+		this.temporadaDTO = temporadaDTO;
 	}
-	@Override
-	public String toString() {
-		return "PlantaDTO [id=" + id + ", mesInicio=" + mesInicio + ", mesFin=" + mesFin + ", descripcion="
-				+ descripcion + ", suelo=" + suelo + ", clima=" + clima + "]";
+
+
+	public SueloDTO getSueloDTO() {
+		return sueloDTO;
 	}
+
+
+	public void setSueloDTO(SueloDTO sueloDTO) {
+		this.sueloDTO = sueloDTO;
+	}
+
+
+	public ClimaDTO getClimaDTO() {
+		return climaDTO;
+	}
+
+
+	public void setClimaDTO(ClimaDTO climaDTO) {
+		this.climaDTO = climaDTO;
+	}
+
+
+	public Date getTiempoRiego() {
+		return tiempoRiego;
+	}
+
+
+	public void setTiempoRiego(Date tiempoRiego) {
+		this.tiempoRiego = tiempoRiego;
+	}
+
+
+	public List<SeguimientoDTO> getSeguimientoDTO() {
+		return seguimientoDTO;
+	}
+
+
+	public void setSeguimientoDTO(List<SeguimientoDTO> seguimientoDTO) {
+		this.seguimientoDTO = seguimientoDTO;
+	}
+
+
 	public PlantaDTO() {
 		super();
 	}

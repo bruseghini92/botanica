@@ -1,18 +1,24 @@
 package ar.edu.um.ingenieria.dto;
 
-
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class EtepaDTO {
+public class EtapaDTO {
 	
 	private Integer id;
+	
 	@NotNull
 	@Size(min=2,max=45)	
 	private String nombre;
+	
 	@NotNull
-	@Size(min=2,max=512)
+	@Size(min=2,max=255)
 	private String descripcion;
+
+	private EstadoDTO estadoDTO;
+	
+	private List<TareaDTO> tareasDTO;
 	
 	public Integer getId() {
 		return id;
@@ -34,11 +40,24 @@ public class EtepaDTO {
 		this.descripcion = descripcion;
 	}
 	
+	public EstadoDTO getEstadoDTO() {
+		return estadoDTO;
+	}
+	public void setEstadoDTO(EstadoDTO estadoDTO) {
+		this.estadoDTO = estadoDTO;
+	}
+	public List<TareaDTO> getTareasDTO() {
+		return tareasDTO;
+	}
+	public void setTareasDTO(List<TareaDTO> tareasDTO) {
+		this.tareasDTO = tareasDTO;
+	}
 	@Override
 	public String toString() {
-		return "Etepa [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
+		return "EtapaDTO [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", estadoDTO=" + estadoDTO
+				+ ", tareasDTO=" + tareasDTO + "]";
 	}
-	public EtepaDTO() {
+	public EtapaDTO() {
 		super();
 	}
 }

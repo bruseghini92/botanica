@@ -4,8 +4,8 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class ClimaDTO {
-
+public class TipoVentaDTO {
+	
 	private Integer id;
 	
 	@NotNull
@@ -16,8 +16,8 @@ public class ClimaDTO {
 	@Size(min=2,max=255)
 	private String descripcion;
 	
-	private List<PlantaDTO> plantasDTO;
-	
+	private List<VentaDTO> ventasDTO;
+
 	public Integer getId() {
 		return id;
 	}
@@ -42,21 +42,17 @@ public class ClimaDTO {
 		this.descripcion = descripcion;
 	}
 
-	public List<PlantaDTO> getPlantasDTO() {
-		return plantasDTO;
+	public List<VentaDTO> getVentasDTO() {
+		return ventasDTO;
 	}
 
-	public void setPlantasDTO(List<PlantaDTO> plantasDTO) {
-		this.plantasDTO = plantasDTO;
+	public void setVentasDTO(List<VentaDTO> ventasDTO) {
+		this.ventasDTO = ventasDTO;
 	}
 
 	@Override
 	public String toString() {
-		return "ClimaDTO [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", plantasDTO="
-				+ plantasDTO + "]";
-	}
-	
-	public ClimaDTO() {
-		super();
+		return "TipoVentaDTO [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", ventasDTO="
+				+ ventasDTO + "]";
 	}
 }

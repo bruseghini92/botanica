@@ -4,20 +4,22 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class ClimaDTO {
-
+public class TareaDTO {
+	
 	private Integer id;
-	
+
 	@NotNull
-	@Size(min=2,max=45)
+	@Size(min=2,max=120)
 	private String nombre;
-	
+
 	@NotNull
 	@Size(min=2,max=255)
 	private String descripcion;
-	
-	private List<PlantaDTO> plantasDTO;
-	
+
+	private EtapaDTO etapaDTO;
+
+	private List<SeguimientoDTO> seguimientoDTO;
+
 	public Integer getId() {
 		return id;
 	}
@@ -42,21 +44,26 @@ public class ClimaDTO {
 		this.descripcion = descripcion;
 	}
 
-	public List<PlantaDTO> getPlantasDTO() {
-		return plantasDTO;
+	public EtapaDTO getEtapaDTO() {
+		return etapaDTO;
 	}
 
-	public void setPlantasDTO(List<PlantaDTO> plantasDTO) {
-		this.plantasDTO = plantasDTO;
+	public void setEtapaDTO(EtapaDTO etapaDTO) {
+		this.etapaDTO = etapaDTO;
+	}
+
+	public List<SeguimientoDTO> getSeguimientoDTO() {
+		return seguimientoDTO;
+	}
+
+	public void setSeguimientoDTO(List<SeguimientoDTO> seguimientoDTO) {
+		this.seguimientoDTO = seguimientoDTO;
 	}
 
 	@Override
 	public String toString() {
-		return "ClimaDTO [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", plantasDTO="
-				+ plantasDTO + "]";
+		return "TareaDTO [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", etapaDTO=" + etapaDTO
+				+ ", seguimientoDTO=" + seguimientoDTO + "]";
 	}
 	
-	public ClimaDTO() {
-		super();
-	}
 }

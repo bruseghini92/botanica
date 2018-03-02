@@ -1,22 +1,21 @@
 package ar.edu.um.ingenieria.dto;
 
 import java.util.List;
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class ClimaDTO {
-
+public class CategoriaDTO {
 	private Integer id;
-	
 	@NotNull
-	@Size(min=2,max=45)
+	@Size(min=3,max=45)
 	private String nombre;
 	
-	@NotNull
-	@Size(min=2,max=255)
-	private String descripcion;
+	@Size(min=3,max=255)
+	@Column(name = "descripcion")
+	private String descripcion;	
 	
-	private List<PlantaDTO> plantasDTO;
+	private List<TemaDTO> temasDTO;
 	
 	public Integer getId() {
 		return id;
@@ -42,21 +41,21 @@ public class ClimaDTO {
 		this.descripcion = descripcion;
 	}
 
-	public List<PlantaDTO> getPlantasDTO() {
-		return plantasDTO;
+	public List<TemaDTO> getTemasDTO() {
+		return temasDTO;
 	}
 
-	public void setPlantasDTO(List<PlantaDTO> plantasDTO) {
-		this.plantasDTO = plantasDTO;
+	public void setTemasDTO(List<TemaDTO> temasDTO) {
+		this.temasDTO = temasDTO;
 	}
 
 	@Override
 	public String toString() {
-		return "ClimaDTO [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", plantasDTO="
-				+ plantasDTO + "]";
+		return "CategoriaDTO [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", temasDTO="
+				+ temasDTO + "]";
 	}
 	
-	public ClimaDTO() {
+	public CategoriaDTO() {
 		super();
 	}
 }

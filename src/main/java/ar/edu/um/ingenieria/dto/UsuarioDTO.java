@@ -1,9 +1,12 @@
 package ar.edu.um.ingenieria.dto;
 
+import java.util.Date;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import org.hibernate.validator.constraints.Email;
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class UsuarioDTO {
 	
 	private Integer id;	
@@ -15,16 +18,46 @@ public class UsuarioDTO {
 	@NotNull
 	@Size(min=8,max=16)
 	private String password;
-	@NotNull
-	@Size(min=2,max=120)
-	private String nombre;
-	@NotNull
-	@Size(min=2,max=120)
-	private String apellido;
-	@NotNull
-	private Integer edad;
+	
 	private RolDTO rol;
 	
+	private List<SeguimientoDTO> seguimientoDTO;
+
+	private PersonaDTO personaDTO;
+	
+	public List<SeguimientoDTO> getSeguimientoDTO() {
+		return seguimientoDTO;
+	}
+
+
+	public void setSeguimientoDTO(List<SeguimientoDTO> seguimientoDTO) {
+		this.seguimientoDTO = seguimientoDTO;
+	}
+
+
+	public PersonaDTO getPersonaDTO() {
+		return personaDTO;
+	}
+
+
+	public void setPersonaDTO(PersonaDTO personaDTO) {
+		this.personaDTO = personaDTO;
+	}
+
+
+	public Date getLastPasswordResetDate() {
+		return lastPasswordResetDate;
+	}
+
+
+	public void setLastPasswordResetDate(Date lastPasswordResetDate) {
+		this.lastPasswordResetDate = lastPasswordResetDate;
+	}
+
+
+	@NotNull
+	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
+    private Date lastPasswordResetDate;
 	
 	public Integer getId() {
 		return id;
@@ -65,37 +98,6 @@ public class UsuarioDTO {
 		this.password = password;
 	}
 
-
-	public String getNombre() {
-		return nombre;
-	}
-
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-
-	public String getApellido() {
-		return apellido;
-	}
-
-
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
-
-
-	public Integer getEdad() {
-		return edad;
-	}
-
-
-	public void setEdad(Integer edad) {
-		this.edad = edad;
-	}
-
-
 	public RolDTO getRol() {
 		return rol;
 	}
@@ -108,10 +110,9 @@ public class UsuarioDTO {
 
 	@Override
 	public String toString() {
-		return "UsuarioDTO [id=" + id + ", user=" + user + ", email=" + email + ", password=" + password + ", nombre="
-				+ nombre + ", apellido=" + apellido + ", edad=" + edad + ", rol=" + rol + "]";
+		return "UsuarioDTO [id=" + id + ", user=" + user + ", email=" + email + ", password=" + password + ", rol=" + rol + ", personaDTO=" + personaDTO
+				+ ", lastPasswordResetDate=" + lastPasswordResetDate + "]";
 	}
-
 
 	public UsuarioDTO() {
 		super();

@@ -1,92 +1,73 @@
 package ar.edu.um.ingenieria.dto;
 
+import java.sql.Date;
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class RespuestaDTO {
 	
 	private Integer id;
+	
+	private TemaDTO temaDTO;
+	
 	@NotNull
-	private PreguntaDTO pregunta;	
-	@NotNull
-	@Size(min=1,max=255)
-	private String texto;	
-	@NotNull
-	private UsuarioDTO usuario;
+	@Size(min=2,max=255)
+	private String texto;
+
+	private UsuarioDTO usuarioDTO;
+	
+	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
+	@Column(name = "fecha")
+	private Date fecha;
 	
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public PreguntaDTO getPregunta() {
-		return pregunta;
+
+	public TemaDTO getTemaDTO() {
+		return temaDTO;
 	}
-	public void setPregunta(PreguntaDTO pregunta) {
-		this.pregunta = pregunta;
+
+	public void setTemaDTO(TemaDTO temaDTO) {
+		this.temaDTO = temaDTO;
 	}
+
 	public String getTexto() {
 		return texto;
 	}
+
 	public void setTexto(String texto) {
 		this.texto = texto;
 	}
-	public UsuarioDTO getUsuario() {
-		return usuario;
+
+	public UsuarioDTO getUsuarioDTO() {
+		return usuarioDTO;
 	}
-	public void setUsuario(UsuarioDTO usuario) {
-		this.usuario = usuario;
+
+	public void setUsuarioDTO(UsuarioDTO usuarioDTO) {
+		this.usuarioDTO = usuarioDTO;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((pregunta == null) ? 0 : pregunta.hashCode());
-		result = prime * result + ((texto == null) ? 0 : texto.hashCode());
-		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
-		return result;
+
+	public Date getFecha() {
+		return fecha;
 	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		RespuestaDTO other = (RespuestaDTO) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (pregunta == null) {
-			if (other.pregunta != null)
-				return false;
-		} else if (!pregunta.equals(other.pregunta))
-			return false;
-		if (texto == null) {
-			if (other.texto != null)
-				return false;
-		} else if (!texto.equals(other.texto))
-			return false;
-		if (usuario == null) {
-			if (other.usuario != null)
-				return false;
-		} else if (!usuario.equals(other.usuario))
-			return false;
-		return true;
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Respuesta [id=" + id + ", pregunta=" + pregunta + ", texto=" + texto + ", usuario=" + usuario + "]";
+		return "RespuestaDTO [id=" + id + ", temaDTO=" + temaDTO + ", texto=" + texto + ", usuarioDTO=" + usuarioDTO
+				+ ", fecha=" + fecha + "]";
 	}
-	
+
 	public RespuestaDTO() {
 		super();
 	}	
