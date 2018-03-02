@@ -14,10 +14,10 @@
 <LINK REL="SHORTCUT ICON" HREF="img/header.jpg" />
 
 <!-- Bootstrap core CSS -->
-<link href="/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+<link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 
 <!-- Custom fonts for this template -->
-<link href="/vendor/font-awesome/css/font-awesome.css" rel="stylesheet"
+<link href="vendor/font-awesome/css/font-awesome.css" rel="stylesheet"
 	type="text/css">
 <link
 	href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
@@ -27,10 +27,10 @@
 	rel='stylesheet' type='text/css'>
 
 <!-- Plugin CSS -->
-<link href="/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+<link href="/botanica/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="/css/creative.css" rel="stylesheet">
+<link href="css/creative.css" rel="stylesheet">
 
 </head>
 
@@ -75,3 +75,6 @@
 			</div>
 		</div>
 	</nav>
+	
+</body>
+</html>	
