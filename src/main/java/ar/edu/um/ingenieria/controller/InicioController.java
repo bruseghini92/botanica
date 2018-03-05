@@ -28,7 +28,7 @@ public class InicioController {
 	
 	@GetMapping("/")
 	public String indexPage(@AuthenticationPrincipal Usuario sesion,Model model) {
-		logger.info("carga pagina de inicio controler");
+		logger.info("carga pagina de inicio controsdfsdfler");
 		model.addAttribute("sesion", sesion);
 		return "index"; 
 	}
