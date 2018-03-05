@@ -80,8 +80,22 @@ public class Seguimiento implements Serializable{
 	@Column ( name = "fecha_poda")
 	private Date fechaPoda;
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@JsonFormat(pattern="dd/MM/yyyy")
+	@Column ( name = "fecha_cosecha")
+	private Date fechaCosecha;
+	
 	public Integer getId() {
 		return id;
+	}
+
+	public Date getFechaCosecha() {
+		return fechaCosecha;
+	}
+
+	public void setFechaCosecha(Date fechaCosecha) {
+		this.fechaCosecha = fechaCosecha;
 	}
 
 	public void setId(Integer id) {
@@ -179,6 +193,7 @@ public class Seguimiento implements Serializable{
 		result = prime * result + ((estado == null) ? 0 : estado.hashCode());
 		result = prime * result + ((etapa == null) ? 0 : etapa.hashCode());
 		result = prime * result + ((fechaAbono == null) ? 0 : fechaAbono.hashCode());
+		result = prime * result + ((fechaCosecha == null) ? 0 : fechaCosecha.hashCode());
 		result = prime * result + ((fechaInicio == null) ? 0 : fechaInicio.hashCode());
 		result = prime * result + ((fechaPoda == null) ? 0 : fechaPoda.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -213,6 +228,11 @@ public class Seguimiento implements Serializable{
 			if (other.fechaAbono != null)
 				return false;
 		} else if (!fechaAbono.equals(other.fechaAbono))
+			return false;
+		if (fechaCosecha == null) {
+			if (other.fechaCosecha != null)
+				return false;
+		} else if (!fechaCosecha.equals(other.fechaCosecha))
 			return false;
 		if (fechaInicio == null) {
 			if (other.fechaInicio != null)
@@ -261,7 +281,8 @@ public class Seguimiento implements Serializable{
 	public String toString() {
 		return "Seguimiento [id=" + id + ", planta=" + planta + ", estado=" + estado + ", etapa=" + etapa + ", tarea="
 				+ tarea + ", ultimoRiego=" + ultimoRiego + ", proximoRiego=" + proximoRiego + ", fechaInicio="
-				+ fechaInicio + ", fechaAbono=" + fechaAbono + ", fechaPoda=" + fechaPoda + "]";
+				+ fechaInicio + ", fechaAbono=" + fechaAbono + ", fechaPoda=" + fechaPoda + ", fechaCosecha="
+				+ fechaCosecha + "]";
 	}
 
 	public Seguimiento() {

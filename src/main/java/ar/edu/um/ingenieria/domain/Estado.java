@@ -35,6 +35,10 @@ public class Estado implements Serializable {
 	@OneToMany (mappedBy="estado",fetch = FetchType.LAZY)
 	private List<Seguimiento> seguimientos;
 	
+	@JsonIgnore
+	@OneToMany (mappedBy="estado",fetch = FetchType.LAZY)
+	private List<Etapa> etapas;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -67,6 +71,14 @@ public class Estado implements Serializable {
 		this.seguimientos = seguimientos;
 	}
 
+	public List<Etapa> getEtapas() {
+		return etapas;
+	}
+
+	public void setEtapas(List<Etapa> etapas) {
+		this.etapas = etapas;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -76,6 +88,7 @@ public class Estado implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((descripcion == null) ? 0 : descripcion.hashCode());
+		result = prime * result + ((etapas == null) ? 0 : etapas.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result + ((seguimientos == null) ? 0 : seguimientos.hashCode());
@@ -95,6 +108,11 @@ public class Estado implements Serializable {
 			if (other.descripcion != null)
 				return false;
 		} else if (!descripcion.equals(other.descripcion))
+			return false;
+		if (etapas == null) {
+			if (other.etapas != null)
+				return false;
+		} else if (!etapas.equals(other.etapas))
 			return false;
 		if (id == null) {
 			if (other.id != null)

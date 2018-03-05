@@ -21,23 +21,27 @@ public class ExceptionControllerAdvice {
 	@ExceptionHandler(RuntimeException.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public String exception(Exception e) {
+		logger.info("Retrurn:"+URL_500);
 		return URL_500;
 	}
 
 	@ExceptionHandler(DisabledException.class)
 	public String disabledException(DisabledException e) {
+		logger.info("Retrurn:"+URL_404);
 		return URL_404;
 	}
 
 	@ExceptionHandler(NoHandlerFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public String exception404(NoHandlerFoundException e) {
+		logger.info("Retrurn:"+URL_404);
 		return URL_404;
 	}
 
 	@ExceptionHandler({ AccessDeniedException.class, IllegalStateException.class })
 	@ResponseStatus(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED)
 	public String accessDeniedException(AccessDeniedException e) {
+		logger.info("Retrurn:"+URL_403);
 		return URL_403;
 	}
 }
