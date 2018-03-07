@@ -1,6 +1,5 @@
 package ar.edu.um.ingenieria.dto;
 
-import java.util.List;
 import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -8,15 +7,13 @@ import javax.validation.constraints.Size;
 public class CategoriaDTO {
 	private Integer id;
 	@NotNull
-	@Size(min=3,max=45)
+	@Size(min = 3, max = 45)
 	private String nombre;
-	
-	@Size(min=3,max=255)
+
+	@Size(min = 3, max = 255)
 	@Column(name = "descripcion")
-	private String descripcion;	
-	
-	private List<TemaDTO> temasDTO;
-	
+	private String descripcion;
+
 	public Integer getId() {
 		return id;
 	}
@@ -41,20 +38,11 @@ public class CategoriaDTO {
 		this.descripcion = descripcion;
 	}
 
-	public List<TemaDTO> getTemasDTO() {
-		return temasDTO;
-	}
-
-	public void setTemasDTO(List<TemaDTO> temasDTO) {
-		this.temasDTO = temasDTO;
-	}
-
 	@Override
 	public String toString() {
-		return "CategoriaDTO [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", temasDTO="
-				+ temasDTO + "]";
+		return "CategoriaDTO [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
 	}
-	
+
 	public CategoriaDTO() {
 		super();
 	}

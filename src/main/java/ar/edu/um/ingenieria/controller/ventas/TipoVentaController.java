@@ -1,38 +1,60 @@
 package ar.edu.um.ingenieria.controller.ventas;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import ar.edu.um.ingenieria.domain.TipoVenta;
+import ar.edu.um.ingenieria.convertor.TipoVentaConvertor;
+import ar.edu.um.ingenieria.dto.TipoVentaDTO;
 import ar.edu.um.ingenieria.service.impl.TipoVentaServiceImpl;
 
-@RestController
+@Controller
 @RequestMapping("/tipoventas")
-@Secured({"ROLE_USER" , "ROLE_VENDEDOR", "ROLE_ADMIN"})
+@Secured({ "ROLE_USER", "ROLE_VENDEDOR", "ROLE_ADMIN" })
 public class TipoVentaController {
+
+	@Autowired
+	private TipoVentaConvertor tipoVentaConvertor;
 
 	@Autowired
 	private TipoVentaServiceImpl tipoVentaServiceImpl;
 
-	@GetMapping("/")
-	public ResponseEntity<List<TipoVenta>> findAll() {
-		return new ResponseEntity<List<TipoVenta>>(tipoVentaServiceImpl.findAll(), HttpStatus.OK);
+	private static final String URL_LOGIN = "tipo_ventas";
+
+	final static Logger logger = Logger.getLogger(TipoVentaController.class);
+
+	@GetMapping
+	public String indexPage(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		request.setAttribute("Session", session);
+		List<TipoVentaDTO> tipoVentaDTO = tipoVentaConvertor.convertToListDTO(tipoVentaServiceImpl.findAll());
+		logger.info("Datos del tipo:{" + tipoVentaDTO + "}");
+		request.setAttribute("tipoPlanta", tipoVentaDTO);
+		request.getRequestDispatcher("tipoplanta.jsp").forward(request, response);
+		return URL_LOGIN;
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<TipoVenta> findById(@PathVariable Integer id) {
-		if(tipoVentaServiceImpl.findById(id)==null)
-			return new ResponseEntity<TipoVenta>(HttpStatus.NO_CONTENT);
-		else
-			return new ResponseEntity<TipoVenta>(tipoVentaServiceImpl.findById(id),HttpStatus.OK);
+	public String show(@PathVariable Integer id, HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		request.setAttribute("Session", session);
+		TipoVentaDTO tipoVentaDTO = tipoVentaConvertor.convertToDTO(tipoVentaServiceImpl.findById(id));
+		logger.info("Datos del tipo:{" + tipoVentaDTO + "}");
+		request.setAttribute("tipoPlanta", tipoVentaDTO);
+		request.getRequestDispatcher("tipoplanta.jsp").forward(request, response);
+		return URL_LOGIN;
 	}
 }
-

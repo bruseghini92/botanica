@@ -7,21 +7,21 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class RespuestaDTO {
-	
+
 	private Integer id;
-	
+
 	private TemaDTO temaDTO;
-	
+
 	@NotNull
-	@Size(min=2,max=255)
+	@Size(min = 2, max = 255)
 	private String texto;
 
-	private UsuarioDTO usuarioDTO;
-	
-	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
+	private UsuarioDTO usuario;
+
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	@Column(name = "fecha")
 	private Date fecha;
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -47,11 +47,11 @@ public class RespuestaDTO {
 	}
 
 	public UsuarioDTO getUsuarioDTO() {
-		return usuarioDTO;
+		return usuario;
 	}
 
-	public void setUsuarioDTO(UsuarioDTO usuarioDTO) {
-		this.usuarioDTO = usuarioDTO;
+	public void setUsuarioDTO(UsuarioDTO usuario) {
+		this.usuario = usuario;
 	}
 
 	public Date getFecha() {
@@ -64,11 +64,11 @@ public class RespuestaDTO {
 
 	@Override
 	public String toString() {
-		return "RespuestaDTO [id=" + id + ", temaDTO=" + temaDTO + ", texto=" + texto + ", usuarioDTO=" + usuarioDTO
+		return "RespuestaDTO [id=" + id + ", temaDTO=" + temaDTO + ", texto=" + texto + ", usuarioDTO=" + usuario
 				+ ", fecha=" + fecha + "]";
 	}
 
 	public RespuestaDTO() {
 		super();
-	}	
+	}
 }

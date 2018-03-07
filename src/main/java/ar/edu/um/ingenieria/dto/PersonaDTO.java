@@ -12,12 +12,14 @@ public class PersonaDTO {
 	@NotNull
 	@Size(min=2,max=50)	
 	private String apellido;
+	
 	@NotNull
 	@Size(min=2,max=50)	
 	private String nombre;
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date fechaNacimiento;
-	@NotNull
+	
 	private UsuarioDTO usuario;
 
 	public Integer getId() {
@@ -63,7 +65,7 @@ public class PersonaDTO {
 	@Override
 	public String toString() {
 		return "PersonaDTO [id=" + id + ", apellido=" + apellido + ", nombre=" + nombre + ", fechaNacimiento="
-				+ fechaNacimiento + ", usuario=" + usuario + "]";
+				+ fechaNacimiento + "]";
 	}
 
 	public PersonaDTO() {

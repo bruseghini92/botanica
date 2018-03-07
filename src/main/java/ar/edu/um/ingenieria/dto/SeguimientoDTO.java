@@ -1,36 +1,53 @@
 package ar.edu.um.ingenieria.dto;
 
 import java.util.Date;
+
+import javax.validation.constraints.NotNull;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class SeguimientoDTO {
-	
+
 	private Integer id;
 
-	private UsuarioDTO usuarioDTO;
+	@NotNull
+	private UsuarioDTO usuario;
 
-	private PlantaDTO plantaDTO;
+	@NotNull
+	private PlantaDTO planta;
 
-	private EstadoDTO estadoDTO;
-	
-	private EtapaDTO etapaDTO;
+	@NotNull
+	private EstadoDTO estado;
 
-	private TareaDTO tareaDTO;
+	@NotNull
+	private EtapaDTO etapa;
 
-	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
+	@NotNull
+	private TareaDTO tarea;
+
+	@NotNull
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private Date ultimoRiego;
-	
-	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
+
+	@NotNull
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private Date proximoRiego;
-	
-	@DateTimeFormat(pattern="dd/MM/yyyy")
+
+	@NotNull
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date fechaInicio;
-	
-	@DateTimeFormat(pattern="dd/MM/yyyy")
+
+	@NotNull
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date fechaAbono;
-	
-	@DateTimeFormat(pattern="dd/MM/yyyy")
+
+	@NotNull
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date fechaPoda;
+
+	@NotNull
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private Date fechaCosecha;
 
 	public Integer getId() {
 		return id;
@@ -40,44 +57,44 @@ public class SeguimientoDTO {
 		this.id = id;
 	}
 
-	public UsuarioDTO getUsuarioDTO() {
-		return usuarioDTO;
+	public UsuarioDTO getUsuario() {
+		return usuario;
 	}
 
-	public void setUsuarioDTO(UsuarioDTO usuarioDTO) {
-		this.usuarioDTO = usuarioDTO;
+	public void setUsuario(UsuarioDTO usuario) {
+		this.usuario = usuario;
 	}
 
-	public PlantaDTO getPlantaDTO() {
-		return plantaDTO;
+	public PlantaDTO getPlanta() {
+		return planta;
 	}
 
-	public void setPlantaDTO(PlantaDTO plantaDTO) {
-		this.plantaDTO = plantaDTO;
+	public void setPlanta(PlantaDTO planta) {
+		this.planta = planta;
 	}
 
-	public EstadoDTO getEstadoDTO() {
-		return estadoDTO;
+	public EstadoDTO getEstado() {
+		return estado;
 	}
 
-	public void setEstadoDTO(EstadoDTO estadoDTO) {
-		this.estadoDTO = estadoDTO;
+	public void setEstado(EstadoDTO estadoDTO) {
+		this.estado = estadoDTO;
 	}
 
-	public EtapaDTO getEtapaDTO() {
-		return etapaDTO;
+	public EtapaDTO getEtapa() {
+		return etapa;
 	}
 
-	public void setEtapaDTO(EtapaDTO etapaDTO) {
-		this.etapaDTO = etapaDTO;
+	public void setEtapa(EtapaDTO etapaDTO) {
+		this.etapa = etapaDTO;
 	}
 
-	public TareaDTO getTareaDTO() {
-		return tareaDTO;
+	public TareaDTO getTarea() {
+		return tarea;
 	}
 
-	public void setTareaDTO(TareaDTO tareaDTO) {
-		this.tareaDTO = tareaDTO;
+	public void setTarea(TareaDTO tareaDTO) {
+		this.tarea = tareaDTO;
 	}
 
 	public Date getUltimoRiego() {
@@ -120,10 +137,19 @@ public class SeguimientoDTO {
 		this.fechaPoda = fechaPoda;
 	}
 
+	public Date getFechaCosecha() {
+		return fechaCosecha;
+	}
+
+	public void setFechaCosecha(Date fechaCosecha) {
+		this.fechaCosecha = fechaCosecha;
+	}
+
 	@Override
 	public String toString() {
-		return "SeguimientoDTO [id=" + id + ", usuarioDTO=" + usuarioDTO + ", plantaDTO=" + plantaDTO + ", estadoDTO="
-				+ estadoDTO + ", ultimoRiego=" + ultimoRiego + ", proximoRiego=" + proximoRiego + ", fechaInicio="
-				+ fechaInicio + ", fechaAbono=" + fechaAbono + ", fechaPoda=" + fechaPoda + "]";
+		return "SeguimientoDTO [id=" + id + ", usuario=" + usuario + ", planta=" + planta + ", estado=" + estado
+				+ ", etapa=" + etapa + ", tarea=" + tarea + ", ultimoRiego=" + ultimoRiego + ", proximoRiego="
+				+ proximoRiego + ", fechaInicio=" + fechaInicio + ", fechaAbono=" + fechaAbono + ", fechaPoda="
+				+ fechaPoda + ", fechaCosecha=" + fechaCosecha + "]";
 	}
 }

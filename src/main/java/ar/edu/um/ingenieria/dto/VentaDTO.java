@@ -8,22 +8,22 @@ import ar.edu.um.ingenieria.domain.TipoVenta;
 
 public class VentaDTO {
 	private Integer id;
-	
+
 	@NotNull
-	@Size(min=2,max=45)
+	@Size(min = 2, max = 45)
 	private String producto;
-	
+
 	@NotNull
-	@Size(min=2,max=255)
+	@Size(min = 2, max = 255)
 	private String descripcion;
-	
+
 	private TipoVenta tipo_venta_id;
-	
+
 	private UsuarioDTO usuario;
-	
+
 	private Boolean cerrado;
-	
-	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
+
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private Date fecha;
 
 	public Integer getId() {

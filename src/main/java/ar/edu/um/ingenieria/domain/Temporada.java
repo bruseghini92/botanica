@@ -14,8 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name="temporadas")
@@ -34,17 +33,14 @@ public class Temporada implements Serializable {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern="dd/MM/yyyy")
-	@JsonFormat(pattern="dd/MM/yyyy")
 	@Column(name="fecha_inicio")
 	private Date fechaInicio;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern="dd/MM/yyyy")
-	@JsonFormat(pattern="dd/MM/yyyy")
 	@Column(name="fecha_fin")
 	private Date fechaFin;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy = "temporada", fetch = FetchType.LAZY)
 	private List<Planta> plantas;
 	

@@ -17,9 +17,6 @@ import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name = "personas")
 public class Persona implements Serializable {
@@ -36,12 +33,10 @@ public class Persona implements Serializable {
 	private String nombre;
 
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@JsonFormat(pattern="dd/MM/yyyy")
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	@Column(name = "fecha_nacimiento")
 	private Date fechaNacimiento;
-	
-	@JsonIgnore
+
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "usuarios_id")
 	private Usuario usuario;
@@ -135,7 +130,8 @@ public class Persona implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Persona [id=" + id + ", apellido=" + apellido + ", nombre=" + nombre + ", fechaNacimiento=" + fechaNacimiento + "]";
+		return "Persona [id=" + id + ", apellido=" + apellido + ", nombre=" + nombre + ", fechaNacimiento="
+				+ fechaNacimiento + "]";
 	}
 
 	public Persona() {

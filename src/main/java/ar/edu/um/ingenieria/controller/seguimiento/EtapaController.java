@@ -1,56 +1,63 @@
 package ar.edu.um.ingenieria.controller.seguimiento;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import ar.edu.um.ingenieria.domain.Etapa;
-import ar.edu.um.ingenieria.repository.EtapaRepository;
+import ar.edu.um.ingenieria.convertor.EtapaConvertor;
+import ar.edu.um.ingenieria.dto.EtapaDTO;
+import ar.edu.um.ingenieria.service.impl.EtapaServiceImpl;
 
-@RestController
+@Controller
 @RequestMapping("/etapas")
-@Secured({"ROLE_USER" , "ROLE_VENDEDOR", "ROLE_ADMIN"})
+@Secured({ "ROLE_USER", "ROLE_VENDEDOR", "ROLE_ADMIN" })
 public class EtapaController {
 
 	private static final Logger logger = LoggerFactory.getLogger(EtapaController.class);
+
+	private static final String URL_LOGIN = "etapas";
+
 	@Autowired
-	private EtapaRepository etapaRepository;
-	
-	@GetMapping //lo usamos para devolver datos
-	public List<Etapa> indexPage() { //devolver DTO del servicio que queremos mostrar en la aplicacion
-		logger.info("datos de etapa: {}", etapaRepository.findAll());
-		return etapaRepository.findAll();
+	private EtapaServiceImpl etapaServiceImpl;
+
+	@Autowired
+	private EtapaConvertor etapaConvertor;
+
+	@GetMapping
+	public String indexPage(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		request.setAttribute("Session", session);
+		List<EtapaDTO> etapasDTO = etapaConvertor.convertToListDTO(etapaServiceImpl.findAll());
+		logger.info("Datos de etapas:{" + etapasDTO + "}");
+		request.setAttribute("etapas", etapasDTO);
+		request.getRequestDispatcher("etapas.jsp").forward(request, response);
+		return URL_LOGIN;
 	}
-	
-	@GetMapping("/{id}") 
-	public Etapa show(@PathVariable Integer id) {
-		logger.info("datos de usuario: {}", etapaRepository.findAll());
-		return etapaRepository.getOne(id);
+
+	@GetMapping("/{id}")
+	public String show(@PathVariable Integer id, HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		request.setAttribute("Session", session);
+		EtapaDTO etapaDTO = etapaConvertor.convertToDTO(etapaServiceImpl.findById(id));
+		logger.info("Datos de etapas:{" + etapaDTO + "}");
+		request.setAttribute("etapas", etapaDTO);
+		request.getRequestDispatcher("etapas.jsp").forward(request, response);
+		return URL_LOGIN;
 	}
-	
-	@PostMapping //lo usamos para agregar
-	public Etapa add(@RequestBody Etapa etapa) {
-		return etapaRepository.saveAndFlush(etapa);
-	}
-	
-	@PutMapping(value = "/{id}") //para actualizar
-	public Etapa update(@RequestBody Etapa etapa, @PathVariable Integer id) {
-		etapa.setId(id);
-		return etapaRepository.saveAndFlush(etapa);
-	}
-	
-	@DeleteMapping(value = "/{id}") //para borrar
-	public void delete(@PathVariable Integer id) {
-		etapaRepository.delete(id);
-	}
+
 }

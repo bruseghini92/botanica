@@ -4,18 +4,17 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class RolDTO {
-	
+
 	private Integer id;
-	
+
 	@NotNull
-	@Size(min=5,max=520)
+	@Size(min = 5, max = 520)
 	private String rol;
-		
+
 	@NotNull
-	@Size(min=5,max=520)
+	@Size(min = 5, max = 520)
 	private String descripcion;
-	
-	
+
 	public RolDTO() {
 		super();
 	}

@@ -1,22 +1,19 @@
 package ar.edu.um.ingenieria.dto;
 
-import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class TipoVentaDTO {
-	
+
 	private Integer id;
-	
+
 	@NotNull
-	@Size(min=2,max=45)
+	@Size(min = 2, max = 45)
 	private String nombre;
-	
+
 	@NotNull
-	@Size(min=2,max=255)
+	@Size(min = 2, max = 255)
 	private String descripcion;
-	
-	private List<VentaDTO> ventasDTO;
 
 	public Integer getId() {
 		return id;
@@ -42,17 +39,8 @@ public class TipoVentaDTO {
 		this.descripcion = descripcion;
 	}
 
-	public List<VentaDTO> getVentasDTO() {
-		return ventasDTO;
-	}
-
-	public void setVentasDTO(List<VentaDTO> ventasDTO) {
-		this.ventasDTO = ventasDTO;
-	}
-
 	@Override
 	public String toString() {
-		return "TipoVentaDTO [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", ventasDTO="
-				+ ventasDTO + "]";
+		return "TipoVentaDTO [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
 	}
 }

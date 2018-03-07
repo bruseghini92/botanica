@@ -1,6 +1,8 @@
 package ar.edu.um.ingenieria.manager;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,10 +32,10 @@ public class UsuarioManager {
 	public void create(UsuarioDTO usuarioDTO) {
 		Usuario usuario = usuarioConvertor.convertToEntity(usuarioDTO);
 		Persona persona = usuario.getPersona();
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT-0300"));
+		usuario.setLastPasswordResetDate(calendar.getTime());
 		usuario.setPersona(null);
-		usuarioServiceImpl.create(usuario);
-		persona.setUsuario(usuario);
-		personaServiceImpl.create(persona);	
+		usuarioServiceImpl.create(persona,usuario);
 	}
 	
 	public List<UsuarioDTO> showAll(){

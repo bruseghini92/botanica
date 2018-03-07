@@ -1,14 +1,22 @@
 package ar.edu.um.ingenieria.controller.seguimiento;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,13 +24,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
+import ar.edu.um.ingenieria.convertor.SeguimientoConvertor;
 import ar.edu.um.ingenieria.domain.Seguimiento;
+import ar.edu.um.ingenieria.dto.SeguimientoDTO;
 import ar.edu.um.ingenieria.service.impl.PlantaServiceImpl;
 import ar.edu.um.ingenieria.service.impl.SeguimientoServiceImpl;
 import ar.edu.um.ingenieria.service.impl.UsuarioSecurityServiceImpl;
 
-@RestController
+@Controller
 @RequestMapping("/seguimientos")
 @Secured({"ROLE_USER" , "ROLE_VENDEDOR", "ROLE_ADMIN"})
 public class SeguimientoController {
@@ -34,21 +44,39 @@ public class SeguimientoController {
 	private PlantaServiceImpl plantaServiceImpl;
 	
 	@Autowired
+	private SeguimientoConvertor seguimientoConvertor;
+	
+	@Autowired
 	private UsuarioSecurityServiceImpl usuarioSecurityServiceImpl;
 	
+	private static final String URL_LOGIN = "seguimientos";
+	
 	private static final Logger logger = LoggerFactory.getLogger(SeguimientoController.class);
-//Get devuelve todos
+	
 	@GetMapping
-	public List<Seguimiento> indexPage() {
-		seguimientoServiceImpl.UpdateStatus(usuarioSecurityServiceImpl.GetIdUser());
-		logger.info("datos de seguimiento: {", seguimientoServiceImpl.findByUser(usuarioSecurityServiceImpl.GetIdUser())+"}");
-		return seguimientoServiceImpl.findByUser(usuarioSecurityServiceImpl.GetIdUser());
+	public String indexPage(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		request.setAttribute("Session", session);
+		List<Seguimiento> seguimientos = seguimientoServiceImpl.findByUser(usuarioSecurityServiceImpl.GetIdUser());
+		session.setAttribute("ROLE",seguimientos.get(0).getUsuario().getRol().getRol());  
+		List<SeguimientoDTO> seguimientosDTO = seguimientoConvertor.convertToListDTO(seguimientos);
+		logger.info("Datos de seguimientos:{" + seguimientosDTO + "}");
+		request.setAttribute("seguimientos", seguimientosDTO);
+		request.getRequestDispatcher("seguimientos.jsp").forward(request, response);
+		return URL_LOGIN;
 	}
 
 	@GetMapping("/{id}")
-	public Seguimiento show(@PathVariable Integer id) {
-		logger.info("datos de seguimiento: {", seguimientoServiceImpl.findById(id)+"}");
-		return seguimientoServiceImpl.findById(id);
+	public String show(@PathVariable Integer id, HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		request.setAttribute("Session", session);
+		SeguimientoDTO seguimientoDTO = seguimientoConvertor.convertToDTO(seguimientoServiceImpl.findById(id));
+		logger.info("Datos de seguimientos:{" + seguimientoDTO + "}");
+		request.setAttribute("seguimientos", seguimientoDTO);
+		request.getRequestDispatcher("seguimientos.jsp").forward(request, response);
+		return URL_LOGIN;
 	}
 	
 	@PostMapping("/create")

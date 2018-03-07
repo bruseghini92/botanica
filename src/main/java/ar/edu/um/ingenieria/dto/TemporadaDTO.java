@@ -1,30 +1,26 @@
 package ar.edu.um.ingenieria.dto;
 
 import java.util.Date;
-import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
-
 public class TemporadaDTO {
 	private Integer id;
-	
-	@NotNull
-	@Size(min=2,max=25)
-	private String nombre;
-	
-	@NotNull
-	@Size(min=2,max=255)
-	private String descripcion;
-	
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-	private Date fechaInicio;
-	
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-	private Date fechaFin;
 
-	private List<PlantaDTO> plantasDTO;
+	@NotNull
+	@Size(min = 2, max = 25)
+	private String nombre;
+
+	@NotNull
+	@Size(min = 2, max = 255)
+	private String descripcion;
+
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private Date fechaInicio;
+
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private Date fechaFin;
 
 	public Integer getId() {
 		return id;
@@ -66,18 +62,10 @@ public class TemporadaDTO {
 		this.fechaFin = fechaFin;
 	}
 
-	public List<PlantaDTO> getPlantasDTO() {
-		return plantasDTO;
-	}
-
-	public void setPlantasDTO(List<PlantaDTO> plantasDTO) {
-		this.plantasDTO = plantasDTO;
-	}
-
 	@Override
 	public String toString() {
 		return "TemporadaDTO [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", fechaInicio="
-				+ fechaInicio + ", fechaFin=" + fechaFin + ", plantasDTO=" + plantasDTO + "]";
+				+ fechaInicio + ", fechaFin=" + fechaFin + "]";
 	}
-	
+
 }

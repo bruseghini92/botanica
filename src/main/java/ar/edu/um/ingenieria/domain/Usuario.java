@@ -26,43 +26,41 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="usuarios")
-public class Usuario implements Serializable, UserDetails{
+@Table(name = "usuarios")
+public class Usuario implements Serializable, UserDetails {
 	private static final long serialVersionUID = -7153249297528005760L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@Column(name = "user")
 	private String user;
-	
+
 	@Column(name = "email")
 	private String email;
-	
+
 	@Column(name = "password")
 	private String password;
-	
-	@OneToOne(fetch = FetchType.EAGER)	
-	@JoinColumn(name="roles_id")	
+
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "roles_id")
 	private Rol rol;
-	
+
 	@JsonIgnore
-	@OneToMany(mappedBy="usuario",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Seguimiento> seguimiento;
-	
+
 	@OneToOne(mappedBy = "usuario", fetch = FetchType.LAZY)
 	private Persona persona;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
-	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
-	@JsonFormat(pattern="dd/MM/yyyy HH:mm:ss")
-    private Date lastPasswordResetDate;
-	
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	private Date lastPasswordResetDate;
+
 	public Integer getId() {
 		return id;
 	}
@@ -122,7 +120,7 @@ public class Usuario implements Serializable, UserDetails{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -183,13 +181,13 @@ public class Usuario implements Serializable, UserDetails{
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", user=" + user + ", email=" + email + ", password=" + password + ", rol=" + rol
 				+ ", persona=" + persona + "]";
 	}
-	
+
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
@@ -209,20 +207,20 @@ public class Usuario implements Serializable, UserDetails{
 	public boolean isEnabled() {
 		return true;
 	}
-	
-	
-    public void setLastPasswordResetDate(Date lastPasswordResetDate) {
-        this.lastPasswordResetDate = lastPasswordResetDate;
-    }
-	
+
+	public void setLastPasswordResetDate(Date lastPasswordResetDate) {
+		this.lastPasswordResetDate = lastPasswordResetDate;
+	}
+
 	@JsonIgnore
-    public Date getLastPasswordResetDate() {
-        return lastPasswordResetDate;
-    }
+	public Date getLastPasswordResetDate() {
+		return lastPasswordResetDate;
+	}
 
 	public Usuario() {
 		super();
 	}
+
 	@JsonIgnore
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -230,6 +228,7 @@ public class Usuario implements Serializable, UserDetails{
 		authorities.add(new SimpleGrantedAuthority(rol.getRol()));
 		return authorities;
 	}
+
 	@JsonIgnore
 	@Override
 	public String getUsername() {

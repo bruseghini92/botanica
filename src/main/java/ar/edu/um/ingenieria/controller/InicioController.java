@@ -27,9 +27,9 @@ public class InicioController {
 	private TemaRepository temaRepository;
 	
 	@GetMapping("/")
-	public String indexPage(@AuthenticationPrincipal Usuario sesion,Model model) {
+	public String indexPage(@AuthenticationPrincipal Usuario session,Model model) {
 		logger.info("carga pagina de inicio controsdfsdfler");
-		model.addAttribute("sesion", sesion);
+		model.addAttribute("Session", session);
 		return "index"; 
 	}
 }

@@ -21,71 +21,71 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="seguimientos")
-public class Seguimiento implements Serializable{
+@Table(name = "seguimientos")
+public class Seguimiento implements Serializable {
 	private static final long serialVersionUID = -7153249297528005760L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="usuario_id")
+	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
-	
+
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="planta_id")
+	@JoinColumn(name = "planta_id")
 	private Planta planta;
 
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="estado_id")
+	@JoinColumn(name = "estado_id")
 	private Estado estado;
-	
+
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="etapa_id")
+	@JoinColumn(name = "etapa_id")
 	private Etapa etapa;
-	
+
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="tarea_id")
+	@JoinColumn(name = "tarea_id")
 	private Tarea tarea;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
-	@JsonFormat(pattern="dd/MM/yyyy HH:mm:ss")
-	@Column ( name = "ultimo_riego")
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	@Column(name = "ultimo_riego")
 	private Date ultimoRiego;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
-	@JsonFormat(pattern="dd/MM/yyyy HH:mm:ss")
-	@Column ( name = "proximo_riego")
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	@Column(name = "proximo_riego")
 	private Date proximoRiego;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-	@JsonFormat(pattern="dd/MM/yyyy")
-	@Column ( name = "fecha_inicio")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	@Column(name = "fecha_inicio")
 	private Date fechaInicio;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-	@JsonFormat(pattern="dd/MM/yyyy")
-	@Column ( name = "fecha_abono")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	@Column(name = "fecha_abono")
 	private Date fechaAbono;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-	@JsonFormat(pattern="dd/MM/yyyy")
-	@Column ( name = "fecha_poda")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	@Column(name = "fecha_poda")
 	private Date fechaPoda;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-	@JsonFormat(pattern="dd/MM/yyyy")
-	@Column ( name = "fecha_cosecha")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	@Column(name = "fecha_cosecha")
 	private Date fechaCosecha;
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -141,7 +141,7 @@ public class Seguimiento implements Serializable{
 	public void setUltimoRiego(Date ultimoRiego) {
 		this.ultimoRiego = ultimoRiego;
 	}
-	
+
 	public Tarea getTarea() {
 		return tarea;
 	}
