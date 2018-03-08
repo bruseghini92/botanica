@@ -15,12 +15,12 @@
 				modelAttribute="ventas" role="form" cssClass="form-horizontal"
 				accept-charset="utf-8">
 
-				<spring:bind path="user">
+				<spring:bind path="producto">
 					<div class="form-group ${status.error ? 'has-error' : '' }">
-						<label class="control-label col-md-3" for="user">Usuario:</label>
+						<label class="control-label col-md-3" for="producto">Producto:</label>
 						<div class="col-md-7">
-							<form:input cssClass="form-control" path="user"
-								placeholder="Usuario" />
+							<form:input cssClass="form-control" path="producto"
+								placeholder="Producto" />
 							<c:if test="${status.error}">
 								<span class="text-danger">${status.errorMessage}</span>
 							</c:if>
@@ -28,12 +28,12 @@
 					</div>
 				</spring:bind>
 
-				<spring:bind path="email">
+				<spring:bind path="descripcion">
 					<div class="form-group ${status.error ? 'has-error' : '' }">
-						<label class="control-label col-md-3" for="email">email:</label>
+						<label class="control-label col-md-3" for="descripcion">Descripcion:</label>
 						<div class="col-md-7">
-							<form:input cssClass="form-control" path="email"
-								placeholder="Email" />
+							<form:input cssClass="form-control" path="descripcion"
+								placeholder="Descripcion" />
 							<c:if test="${status.error}">
 								<span class="text-danger">${status.errorMessage}</span>
 							</c:if>

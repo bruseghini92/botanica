@@ -54,7 +54,7 @@
 								<td><fmt:formatDate value="${seguimientos.fechaCosecha}"
 										pattern="dd/MM/yyyy" /></td>
 								<td><a type="button" class="btn btn-primary"
-									href="seguimientos/${seguimientos.id}/${seguimiento.tarea.nombre}">Realizar
+									href="seguimientos/${seguimientos.id}/${seguimientos.tarea.nombre}">Realizar
 										Tarea</a></td>
 							</tr>
 						</c:forEach>

@@ -42,9 +42,9 @@
 						<td><fmt:formatDate value="${ventas.fecha}"
 										pattern="dd/MM/yyyy" /></td>
 						<td>${ventas.tipo_venta_id.nombre}
-						<td><a href="/admin/ventaeditar/${ventas.id}"
+						<td><a href="/botanica/admin/ventaeditar/${ventas.id}"
 							class="btn btn-success">Editar</a> <a
-							href="/admin/ventaborrar/${ventas.id}" class="btn btn-danger">Borrar</a></td>
+							href="/botanica/admin/ventaborrar/${ventas.id}" class="btn btn-danger">Borrar</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

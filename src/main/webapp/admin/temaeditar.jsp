@@ -41,15 +41,17 @@
 					</div>
 				</spring:bind>
 
-				<spring:bind path="categoria.nombre">
-					<div class="form-group ${status.error ? 'has-error' : '' }">
-						<label class="control-label col-md-3" for="categoria.nombre">Categoria:</label>
-						<div class="col-md-7">
-							<form:password cssClass="form-control" path="categoria.nombre"/>
-							<c:if test="${status.error}">
-								<span class="text-danger">${status.errorMessage}</span>
-							</c:if>
-						</div>
+				<spring:bind path="categoria">
+					<label class="control-label col-md-3" for="categoria">Temporada:</label>
+					<div class="col-md-3">
+						<form:select path="categoria" cssClass="form-control">
+							<c:forEach items="${categoria}" var="categoria">
+								<form:option value="${categoria.id}" label="${categoria.nombre}" />
+							</c:forEach>
+						</form:select>
+						<c:if test="${status.error}">
+							<span class="text-danger">${status.errorMessage}</span>
+						</c:if>
 					</div>
 				</spring:bind>
 

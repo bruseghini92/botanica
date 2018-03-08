@@ -39,9 +39,9 @@
 										pattern="dd/MM/yyyy" /></td> 
 						<td><fmt:formatDate value="${temporadas.fechaFin}"
 										pattern="dd/MM/yyyy" /></td> 
-						<td><a href="/admin/temporadaeditar/${temporadas.id}"
+						<td><a href="/botanica/admin/temporadaeditar/${temporadas.id}"
 							class="btn btn-success">Editar</a> <a
-							href="/admin/temporadaborrar/${temporadas.id}" class="btn btn-danger">Borrar</a></td>
+							href="/botanica/admin/temporadaborrar/${temporadas.id}" class="btn btn-danger">Borrar</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

@@ -66,7 +66,7 @@ public class TemaAdmController {
 		HttpSession session = request.getSession();
 		request.setAttribute("Session", session);
 		request.setAttribute("temas", temaConvertor.convertToListDTO(temaServiceImpl.findAll()));
-		request.setAttribute("categorias", categoriaConvertor.convertToListDTO(categoriaServiceImpl.findAll()));
+		request.setAttribute("categorias", categoriaConvertor.convertToDTO(temaServiceImpl.findById(id).getCategoria()));
 		return "redirect:/admin/categorias";
 	}
 
@@ -90,6 +90,7 @@ public class TemaAdmController {
 		HttpSession session = request.getSession();
 		request.setAttribute("Session", session);
 		model.addAttribute("tema", temaManager.findById(id));
+		request.setAttribute("categoria", categoriaConvertor.convertToListDTO(categoriaServiceImpl.findAll()));
 		return "/admin/temaeditar";
 	}
 }

@@ -33,9 +33,9 @@
 					<tr>
 						<td>${tipoventas.nombre}</td>
 						<td>${tipoventas.descripcion}</td>
-						<td><a href="/admin/tipoventaeditar/${tipoventas.id}"
+						<td><a href="/botanica/admin/tipoventaseditar/${tipoventas.id}"
 							class="btn btn-success">Editar</a> <a
-							href="/admin/tipoventaborrar/${tipoventas.id}" class="btn btn-danger">Borrar</a></td>
+							href="/botanica/admin/tipoventasborrar/${tipoventas.id}" class="btn btn-danger">Borrar</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

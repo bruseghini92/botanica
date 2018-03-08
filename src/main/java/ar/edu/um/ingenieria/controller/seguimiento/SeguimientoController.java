@@ -37,41 +37,41 @@ import ar.edu.um.ingenieria.service.impl.UsuarioSecurityServiceImpl;
 
 @Controller
 @RequestMapping("/seguimientos")
-@Secured({"ROLE_USER" , "ROLE_VENDEDOR", "ROLE_ADMIN"})
+@Secured({ "ROLE_USER", "ROLE_VENDEDOR", "ROLE_ADMIN" })
 public class SeguimientoController {
-	
+
 	@Autowired
 	private SeguimientoServiceImpl seguimientoServiceImpl;
-	
+
 	@Autowired
 	private PlantaServiceImpl plantaServiceImpl;
-	
+
 	@Autowired
 	private SeguimientoConvertor seguimientoConvertor;
-	
+
 	@Autowired
 	private EstadoServiceImpl estadoServiceImpl;
-	
+
 	@Autowired
 	private PlantaConvertor plantaConvertor;
-	
+
 	@Autowired
 	private EstadoConvertor estadoConvertor;
-	
+
 	@Autowired
 	private UsuarioSecurityServiceImpl usuarioSecurityServiceImpl;
-	
+
 	private static final String URL_LOGIN = "seguimientos";
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(SeguimientoController.class);
-	
+
 	@GetMapping
 	public String indexPage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		request.setAttribute("Session", session);
 		List<Seguimiento> seguimientos = seguimientoServiceImpl.findByUser(usuarioSecurityServiceImpl.GetIdUser());
-		session.setAttribute("ROLE",seguimientos.get(0).getUsuario().getRol().getRol());  
+		session.setAttribute("ROLE", seguimientos.get(0).getUsuario().getRol().getRol());
 		List<SeguimientoDTO> seguimientosDTO = seguimientoConvertor.convertToListDTO(seguimientos);
 		logger.info("Datos de seguimientos:{" + seguimientosDTO + "}");
 		request.setAttribute("seguimientos", seguimientosDTO);
@@ -93,107 +93,96 @@ public class SeguimientoController {
 		request.getRequestDispatcher("seguimientos.jsp").forward(request, response);
 		return URL_LOGIN;
 	}
-	
+
 	@PostMapping
 	public String agregar(Model model, HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		request.setAttribute("Session", session);
-		//request.getRequestDispatcher("seguimientos.jsp").forward(request, response);
+		// request.getRequestDispatcher("seguimientos.jsp").forward(request, response);
 		List<PlantaDTO> plantasDTO = plantaConvertor.convertToListDTO(plantaServiceImpl.findAll());
 		request.setAttribute("plantas", plantasDTO);
 		List<EstadoDTO> estadosDTO = estadoConvertor.convertToListDTO(estadoServiceImpl.findAll());
 		request.setAttribute("estados", estadosDTO);
 		request.setAttribute("seguimiento", new SeguimientoDTO());
 		return "redirect:/seguimientos";
-		}
-	//}
-		
-		/*boolean isEmpty = true;
-		for (int i = 0;i < seguimientos.size();i++)
-		{
-			if ((seguimientos.get(i).getUsuario().getId() == usuarioSecurityServiceImpl.GetIdUser()) && (seguimientos.get(i).getPlanta().getId() == planta) &&(seguimientos.get(i).getEstado().getId() == estado))
-					{
-				isEmpty = false;
-					}
-		}
-		if (isEmpty == true)
-		{
-			Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT-0300"));
-			if (plantaServiceImpl.findById(planta).getTemporada().getFechaInicio().before(calendar.getTime()) && calendar.getTime().before(plantaServiceImpl.findById(planta).getTemporada().getFechaFin()) )
-			{
-			logger.info("Seguimiento creado con exito");
-			seguimientoServiceImpl.create(usuarioSecurityServiceImpl.GetIdUser(),planta,estado);
-			return new ResponseEntity<Void>(HttpStatus.OK);
-			} else {
-				logger.info("No es la estación correcta para iniciar el seguimiento");
-				return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-			}
-		} else {
-			logger.info("Seguimiento existente");
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);*/
-	
-	
-	@PostMapping("/{id}/regar")
-	public ResponseEntity<Seguimiento> regar(@PathVariable Integer id) {
-			seguimientoServiceImpl.regar(id);
-			logger.info("Riego registrado con exito");
-			return new ResponseEntity<Seguimiento>(seguimientoServiceImpl.findById(id),HttpStatus.OK);
 	}
-	
-	@PostMapping("/{id}/suelo_preparado")
-	public ResponseEntity<Seguimiento> sueloPreparado(@PathVariable Integer id) {
-			seguimientoServiceImpl.sueloPreparado(id);
-			logger.info("Suelo preparado con exito");
-			return new ResponseEntity<Seguimiento>(seguimientoServiceImpl.findById(id),HttpStatus.OK);
+	// }
+
+	/*
+	 * boolean isEmpty = true; for (int i = 0;i < seguimientos.size();i++) { if
+	 * ((seguimientos.get(i).getUsuario().getId() ==
+	 * usuarioSecurityServiceImpl.GetIdUser()) &&
+	 * (seguimientos.get(i).getPlanta().getId() == planta)
+	 * &&(seguimientos.get(i).getEstado().getId() == estado)) { isEmpty = false; } }
+	 * if (isEmpty == true) { Calendar calendar =
+	 * Calendar.getInstance(TimeZone.getTimeZone("GMT-0300")); if
+	 * (plantaServiceImpl.findById(planta).getTemporada().getFechaInicio().before(
+	 * calendar.getTime()) &&
+	 * calendar.getTime().before(plantaServiceImpl.findById(planta).getTemporada().
+	 * getFechaFin()) ) { logger.info("Seguimiento creado con exito");
+	 * seguimientoServiceImpl.create(usuarioSecurityServiceImpl.GetIdUser(),planta,
+	 * estado); return new ResponseEntity<Void>(HttpStatus.OK); } else {
+	 * logger.info("No es la estación correcta para iniciar el seguimiento"); return
+	 * new ResponseEntity<Void>(HttpStatus.CONFLICT); } } else {
+	 * logger.info("Seguimiento existente"); return new
+	 * ResponseEntity<Void>(HttpStatus.CONFLICT);
+	 */
+
+	@GetMapping("/{id}/regar")
+	public String regar(@PathVariable Integer id) {
+		seguimientoServiceImpl.regar(id);
+		logger.info("Riego registrado con exito");
+		return "redirect:/seguimientos";
 	}
-	
-	@PostMapping("/{id}/sembrado")
-	public ResponseEntity<Seguimiento> sembrado(@PathVariable Integer id) {
-			seguimientoServiceImpl.sembrado(id);
-			logger.info("Siembra realizado con exito");
-			return new ResponseEntity<Seguimiento>(seguimientoServiceImpl.findById(id),HttpStatus.OK);
+
+	@GetMapping("/{id}/sembrar")
+	public String sembrar(@PathVariable Integer id) {
+		seguimientoServiceImpl.sueloPreparado(id);
+		logger.info("Suelo preparado con exito");
+		return "redirect:/seguimientos/";
 	}
-	
-	@PostMapping("/{id}/podar")
-	public ResponseEntity<Seguimiento> podar(@PathVariable Integer id) {
-			seguimientoServiceImpl.podar(id);
-			logger.info("Poda establecida con exito");
-			return new ResponseEntity<Seguimiento>(seguimientoServiceImpl.findById(id),HttpStatus.OK);
+
+	@GetMapping("/{id}/podar")
+	public String podar(@PathVariable Integer id) {
+		seguimientoServiceImpl.podar(id);
+		logger.info("Poda establecida con exito");
+		return "redirect:/seguimientos/";
 	}
-	
-	@PostMapping("/{id}/transplantar")
-	public ResponseEntity<Seguimiento> transplantar(@PathVariable Integer id) {
-			seguimientoServiceImpl.transplantar(id);
-			logger.info("Transplante establecido con exito");
-			return new ResponseEntity<Seguimiento>(seguimientoServiceImpl.findById(id),HttpStatus.OK);
+
+	@GetMapping("/{id}/transplantar")
+	public String transplantar(@PathVariable Integer id) {
+		seguimientoServiceImpl.transplantar(id);
+		logger.info("Transplante establecido con exito");
+		return "redirect:/seguimientos/";
 	}
-	
-	@PostMapping("/{id}/cosechar")
-	public ResponseEntity<Seguimiento> cosechar(@PathVariable Integer id) {
-			seguimientoServiceImpl.cosechar(id);
-			logger.info("Cosecha establecida con exito");
-			return new ResponseEntity<Seguimiento>(seguimientoServiceImpl.findById(id),HttpStatus.OK);
+
+	@GetMapping("/{id}/cosechar")
+	public String cosechar(@PathVariable Integer id) {
+		seguimientoServiceImpl.cosechar(id);
+		logger.info("Cosecha establecida con exito");
+		return "redirect:/seguimientos/";
 	}
-	
-	@PostMapping("/{id}/abonar")
-	public ResponseEntity<Seguimiento> abonar(@PathVariable Integer id) {
-			seguimientoServiceImpl.abonar(id);
-			logger.info("Abono establecido con exito");
-			return new ResponseEntity<Seguimiento>(seguimientoServiceImpl.findById(id),HttpStatus.OK);
+
+	@GetMapping("/{id}/abonar")
+	public String abonar(@PathVariable Integer id) {
+		seguimientoServiceImpl.abonar(id);
+		logger.info("Abono establecido con exito");
+		return "redirect:/seguimientos/";
 	}
-//Put es para actualizar, patch es para actualizar parcialmente	
+
+	// Put es para actualizar, patch es para actualizar parcialmente
 	@PostMapping("/update")
-	public ResponseEntity<Void> agregar(Integer usuario, Integer planta, Integer estado, Integer tarea, Integer etapa,Integer seguimiento) {
-		seguimientoServiceImpl.update(usuario, planta, estado,tarea, etapa,seguimiento);
+	public ResponseEntity<Void> agregar(Integer usuario, Integer planta, Integer estado, Integer tarea, Integer etapa,
+			Integer seguimiento) {
+		seguimientoServiceImpl.update(usuario, planta, estado, tarea, etapa, seguimiento);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
-/*
-	@PostMapping
-	public Seguimiento add(@RequestBody Seguimiento seguimiento) {
-		return seguimientoServiceImpl.create(seguimiento);
-	}
-*/
+
+	/*
+	 * @PostMapping public Seguimiento add(@RequestBody Seguimiento seguimiento) {
+	 * return seguimientoServiceImpl.create(seguimiento); }
+	 */
 	@PutMapping(value = "/{id}")
 	public Seguimiento update(@RequestBody Seguimiento seguimiento, @PathVariable Integer id) {
 		seguimiento.setId(id);

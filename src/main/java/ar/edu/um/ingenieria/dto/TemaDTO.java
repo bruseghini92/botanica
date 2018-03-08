@@ -42,11 +42,11 @@ public class TemaDTO {
 		this.titulo = titulo;
 	}
 
-	public UsuarioDTO getUsuarioDTO() {
+	public UsuarioDTO getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuarioDTO(UsuarioDTO usuarioDTO) {
+	public void setUsuario(UsuarioDTO usuarioDTO) {
 		this.usuario = usuarioDTO;
 	}
 
@@ -66,11 +66,11 @@ public class TemaDTO {
 		this.texto = texto;
 	}
 
-	public CategoriaDTO getCategoriaDTO() {
+	public CategoriaDTO getCategoria() {
 		return categoria;
 	}
 
-	public void setCategoriaDTO(CategoriaDTO categoriaDTO) {
+	public void setCategoria(CategoriaDTO categoriaDTO) {
 		this.categoria = categoriaDTO;
 	}
 
