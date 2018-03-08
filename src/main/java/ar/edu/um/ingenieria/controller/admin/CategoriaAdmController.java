@@ -1,81 +1,84 @@
 package ar.edu.um.ingenieria.controller.admin;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import ar.edu.um.ingenieria.domain.Categoria;
-import ar.edu.um.ingenieria.repository.CategoriaRepository;
+import ar.edu.um.ingenieria.controller.seguimiento.SeguimientoController;
+import ar.edu.um.ingenieria.convertor.CategoriaConvertor;
+import ar.edu.um.ingenieria.dto.CategoriaDTO;
+import ar.edu.um.ingenieria.dto.UsuarioDTO;
+import ar.edu.um.ingenieria.manager.CategoriaManager;
 import ar.edu.um.ingenieria.service.impl.CategoriaServiceImpl;
 
-
-@RestController
-@RequestMapping("/admin/categoria")
-@Secured({"ROLE_ADMIN"})
+@Controller
+@RequestMapping("/admin")
+@Secured({ "ROLE_ADMIN" })
 public class CategoriaAdmController {
-	
+
+	private static final Logger logger = LoggerFactory.getLogger(SeguimientoController.class);
+
 	@Autowired
 	private CategoriaServiceImpl categoriaServiceImpl;
-	
+
 	@Autowired
-	private CategoriaRepository categoriaRepository;
-	
-	@GetMapping
-	public ResponseEntity<List<Categoria>> findAll() {
-		return new ResponseEntity<List<Categoria>>(categoriaServiceImpl.findAll(), HttpStatus.OK);
+	private CategoriaManager categoriaManager;
+
+	@Autowired
+	private CategoriaConvertor categoriaConvertor;
+
+	@GetMapping("/categorias")
+	public String indexPage(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		request.setAttribute("Session", session);
+		List<CategoriaDTO> categorias = categoriaConvertor.convertToListDTO(categoriaServiceImpl.findAll());
+		logger.info("Datos de las categorias:{" + categorias + "}");
+		request.setAttribute("categorias", categorias);
+		return "/admin/categorias";
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<Categoria> findById(@PathVariable Integer id) {
-		if(categoriaServiceImpl.findById(id)==null)
-			return new ResponseEntity<Categoria>(HttpStatus.CONFLICT);
-		else
-			return new ResponseEntity<Categoria>(categoriaServiceImpl.findById(id),HttpStatus.OK);
+	@GetMapping("/categorias/{id}")
+	public String show(@PathVariable Integer id, HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		request.setAttribute("Session", session);
+		request.setAttribute("categorias", categoriaConvertor.convertToListDTO(categoriaServiceImpl.findAll()));
+		return "redirect:/admin/categorias";
 	}
-	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void>  delete(@PathVariable Integer id) {
-		if(categoriaServiceImpl.findById(id)==null)
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		else {
-			categoriaServiceImpl.remove(categoriaServiceImpl.findById(id));
-			return new ResponseEntity<Void>(HttpStatus.OK);
-		}
+
+	@GetMapping("/categoriaborrar/{id}")
+	public String borrar(@PathVariable Integer id) {
+		categoriaManager.delete(id);
+		return "redirect:/admin/categorias";
 	}
-	
-	@PostMapping
-	public ResponseEntity<Void> create(String nombre, String descripcion){
-		Categoria categoria = new Categoria();
-		if(categoriaRepository.findCategoriaByName(nombre) != null) {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		} else {
-			categoria.setNombre(nombre);
-			categoria.setDescripcion(descripcion);
-			categoriaServiceImpl.create(categoria);
-			return new ResponseEntity<Void> (HttpStatus.OK);
-		}
+
+	@PostMapping("/categorias")
+	public String agregar(@ModelAttribute("categoria") CategoriaDTO categoriaDTO,Model model, HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		logger.info("Ingreso en el controlador POST de edicion CATEGORIAS:{" + categoriaDTO + "}");
+		categoriaServiceImpl.update(categoriaConvertor.convertToEntity(categoriaDTO));
+		return "redirect:/admin/categorias";
 	}
-	
-	@PutMapping("/edit/")
-	public ResponseEntity<Void> edit(Integer id, String nombre, String descripcion) {
-		if (categoriaServiceImpl.findById(id) == null) {
-			return new ResponseEntity<Void> (HttpStatus.CONFLICT);
-		} else {
-			Categoria categoria = categoriaServiceImpl.findById(id);
-			categoria.setNombre(nombre);
-			categoria.setDescripcion(descripcion);
-			categoriaServiceImpl.update(categoria);
-			return new ResponseEntity<Void>(HttpStatus.OK);	
-		}	
+
+	@GetMapping("/categoriaeditar/{id}")
+	public String show(@PathVariable Integer id, Model model) {
+		model.addAttribute("categoria", categoriaManager.findById(id));
+		return "/admin/categoriaeditar";
 	}
 }

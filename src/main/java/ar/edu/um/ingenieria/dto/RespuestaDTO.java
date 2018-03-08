@@ -10,7 +10,7 @@ public class RespuestaDTO {
 
 	private Integer id;
 
-	private TemaDTO temaDTO;
+	private TemaDTO tema;
 
 	@NotNull
 	@Size(min = 2, max = 255)
@@ -30,12 +30,12 @@ public class RespuestaDTO {
 		this.id = id;
 	}
 
-	public TemaDTO getTemaDTO() {
-		return temaDTO;
+	public TemaDTO getTema() {
+		return tema;
 	}
 
-	public void setTemaDTO(TemaDTO temaDTO) {
-		this.temaDTO = temaDTO;
+	public void setTema(TemaDTO tema) {
+		this.tema = tema;
 	}
 
 	public String getTexto() {
@@ -46,11 +46,11 @@ public class RespuestaDTO {
 		this.texto = texto;
 	}
 
-	public UsuarioDTO getUsuarioDTO() {
+	public UsuarioDTO getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuarioDTO(UsuarioDTO usuario) {
+	public void setUsuario(UsuarioDTO usuario) {
 		this.usuario = usuario;
 	}
 
@@ -64,7 +64,7 @@ public class RespuestaDTO {
 
 	@Override
 	public String toString() {
-		return "RespuestaDTO [id=" + id + ", temaDTO=" + temaDTO + ", texto=" + texto + ", usuarioDTO=" + usuario
+		return "RespuestaDTO [id=" + id + ", temaDTO=" + tema + ", texto=" + texto + ", usuarioDTO=" + usuario
 				+ ", fecha=" + fecha + "]";
 	}
 

@@ -20,29 +20,22 @@
 		</div>
 	</c:if>
 	<div class="row">
-		<h1>Usuarios</h1>
+		<h1>Tipos de plantas</h1>
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>Usuario</th>
 					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>Email</th>
-					<th>Tipo de Cuenta</th>
-					<th>Acciones</th>
+					<th>Descripcion</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${usuarios}" var="usuario">
+				<c:forEach items="${tipoplantas}" var="tipoplantas">
 					<tr>
-						<td>${usuario.user}</td>
-						<td>${usuario.persona.nombre}</td>
-						<td>${usuario.persona.apellido}</td>
-						<td>${usuario.email}</td>
-						<td>${usuario.rol.descripcion}</td>
-						<td><a href="/botanica/admin/usuarioeditar/${usuario.id}"
+						<td>${tipoplantas.nombre}</td>
+						<td>${tipoplantas.descripcion}</td>
+						<td><a href="/admin/tipoplantaeditar/${tipoplantas.id}"
 							class="btn btn-success">Editar</a> <a
-							href="/botanica/admin/usuarioborrar/${usuario.id}" class="btn btn-danger">Borrar</a></td>
+							href="/admin/tipoplantaborrar/${tipoplantas.id}" class="btn btn-danger">Borrar</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

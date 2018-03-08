@@ -20,29 +20,26 @@
 		</div>
 	</c:if>
 	<div class="row">
-		<h1>Usuarios</h1>
+		<h1>Respuestas</h1>
 		<table class="table table-striped">
 			<thead>
 				<tr>
+					<th>Tema</th>
+					<th>Texto</th>
 					<th>Usuario</th>
-					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>Email</th>
-					<th>Tipo de Cuenta</th>
-					<th>Acciones</th>
+					<th>Fecha</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${usuarios}" var="usuario">
+				<c:forEach items="${respuestas}" var="respuestas">
 					<tr>
-						<td>${usuario.user}</td>
-						<td>${usuario.persona.nombre}</td>
-						<td>${usuario.persona.apellido}</td>
-						<td>${usuario.email}</td>
-						<td>${usuario.rol.descripcion}</td>
-						<td><a href="/botanica/admin/usuarioeditar/${usuario.id}"
+						<td>${respuestas.tema.titulo}</td>
+						<td>${respuestas.texto}</td>
+						<td>${respuestas.usuario.user}</td>
+						<td>${respuestas.fecha}</td>
+						<td><a href="/admin/respuestaeditar/${respuestas.id}"
 							class="btn btn-success">Editar</a> <a
-							href="/botanica/admin/usuarioborrar/${usuario.id}" class="btn btn-danger">Borrar</a></td>
+							href="/admin/respuestaborrar/${respuestas.id}" class="btn btn-danger">Borrar</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

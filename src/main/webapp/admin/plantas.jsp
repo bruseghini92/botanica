@@ -20,29 +20,32 @@
 		</div>
 	</c:if>
 	<div class="row">
-		<h1>Usuarios</h1>
+		<h1>Plantas</h1>
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>Usuario</th>
 					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>Email</th>
-					<th>Tipo de Cuenta</th>
-					<th>Acciones</th>
+					<th>Suelo</th>
+					<th>Clima</th>
+					<th>Temporada</th>
+					<th>Descripcion</th>
+					<th>Tiempo riego</th>
+					<th>Tipo Planta</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${usuarios}" var="usuario">
+				<c:forEach items="${plantas}" var="plantas">
 					<tr>
-						<td>${usuario.user}</td>
-						<td>${usuario.persona.nombre}</td>
-						<td>${usuario.persona.apellido}</td>
-						<td>${usuario.email}</td>
-						<td>${usuario.rol.descripcion}</td>
-						<td><a href="/botanica/admin/usuarioeditar/${usuario.id}"
+						<td>${plantas.nombre}</td>
+						<td>${plantas.suelo.nombre}</td>
+						<td>${plantas.clima.nombre}</td>
+						<td>${plantas.temporada.nombre}</td>
+						<td>${plantas.descripcion}</td>
+						<td>${plantas.tiempoRiego}</td>
+						<td>${plantas.tipo.nombre}</td>
+						<td><a href="/admin/plantaeditar/${plantas.id}"
 							class="btn btn-success">Editar</a> <a
-							href="/botanica/admin/usuarioborrar/${usuario.id}" class="btn btn-danger">Borrar</a></td>
+							href="/admin/plantaborrar/${plantas.id}" class="btn btn-danger">Borrar</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

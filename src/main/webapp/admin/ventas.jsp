@@ -20,29 +20,31 @@
 		</div>
 	</c:if>
 	<div class="row">
-		<h1>Usuarios</h1>
+		<h1>Ventas</h1>
 		<table class="table table-striped">
 			<thead>
 				<tr>
+					<th>Producto</th>
+					<th>Decripcion</th>
 					<th>Usuario</th>
-					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>Email</th>
-					<th>Tipo de Cuenta</th>
-					<th>Acciones</th>
+					<th>Cerrado</th>
+					<th>Fecha</th>
+					<th>Tipo de Venta</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${usuarios}" var="usuario">
+				<c:forEach items="${ventas}" var="ventas">
 					<tr>
-						<td>${usuario.user}</td>
-						<td>${usuario.persona.nombre}</td>
-						<td>${usuario.persona.apellido}</td>
-						<td>${usuario.email}</td>
-						<td>${usuario.rol.descripcion}</td>
-						<td><a href="/botanica/admin/usuarioeditar/${usuario.id}"
+						<td>${ventas.producto}</td>
+						<td>${ventas.descripcion}</td>
+						<td>${ventas.usuario.user}</td>
+						<td>${ventas.cerrado}</td>
+						<td><fmt:formatDate value="${ventas.fecha}"
+										pattern="dd/MM/yyyy" /></td>
+						<td>${ventas.tipo_venta_id.nombre}
+						<td><a href="/admin/ventaeditar/${ventas.id}"
 							class="btn btn-success">Editar</a> <a
-							href="/botanica/admin/usuarioborrar/${usuario.id}" class="btn btn-danger">Borrar</a></td>
+							href="/admin/ventaborrar/${ventas.id}" class="btn btn-danger">Borrar</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

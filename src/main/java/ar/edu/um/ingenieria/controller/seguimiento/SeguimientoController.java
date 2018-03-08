@@ -1,10 +1,7 @@
 package ar.edu.um.ingenieria.controller.seguimiento;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.List;
-import java.util.TimeZone;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,9 +23,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ar.edu.um.ingenieria.convertor.EstadoConvertor;
+import ar.edu.um.ingenieria.convertor.PlantaConvertor;
 import ar.edu.um.ingenieria.convertor.SeguimientoConvertor;
 import ar.edu.um.ingenieria.domain.Seguimiento;
+import ar.edu.um.ingenieria.dto.EstadoDTO;
+import ar.edu.um.ingenieria.dto.PlantaDTO;
 import ar.edu.um.ingenieria.dto.SeguimientoDTO;
+import ar.edu.um.ingenieria.service.impl.EstadoServiceImpl;
 import ar.edu.um.ingenieria.service.impl.PlantaServiceImpl;
 import ar.edu.um.ingenieria.service.impl.SeguimientoServiceImpl;
 import ar.edu.um.ingenieria.service.impl.UsuarioSecurityServiceImpl;
@@ -47,6 +50,15 @@ public class SeguimientoController {
 	private SeguimientoConvertor seguimientoConvertor;
 	
 	@Autowired
+	private EstadoServiceImpl estadoServiceImpl;
+	
+	@Autowired
+	private PlantaConvertor plantaConvertor;
+	
+	@Autowired
+	private EstadoConvertor estadoConvertor;
+	
+	@Autowired
 	private UsuarioSecurityServiceImpl usuarioSecurityServiceImpl;
 	
 	private static final String URL_LOGIN = "seguimientos";
@@ -63,7 +75,10 @@ public class SeguimientoController {
 		List<SeguimientoDTO> seguimientosDTO = seguimientoConvertor.convertToListDTO(seguimientos);
 		logger.info("Datos de seguimientos:{" + seguimientosDTO + "}");
 		request.setAttribute("seguimientos", seguimientosDTO);
-		request.getRequestDispatcher("seguimientos.jsp").forward(request, response);
+		request.setAttribute("planta", new PlantaDTO());
+		request.setAttribute("estado", new EstadoDTO());
+		request.setAttribute("plantas", plantaConvertor.convertToListDTO(plantaServiceImpl.findAll()));
+		request.setAttribute("estados", estadoConvertor.convertToListDTO(estadoServiceImpl.findAll()));
 		return URL_LOGIN;
 	}
 
@@ -79,10 +94,22 @@ public class SeguimientoController {
 		return URL_LOGIN;
 	}
 	
-	@PostMapping("/create")
-	public ResponseEntity<Void> agregar(Integer planta, Integer estado) {
-		List<Seguimiento> seguimientos = seguimientoServiceImpl.findAll();
-		boolean isEmpty = true;
+	@PostMapping
+	public String agregar(Model model, HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		request.setAttribute("Session", session);
+		//request.getRequestDispatcher("seguimientos.jsp").forward(request, response);
+		List<PlantaDTO> plantasDTO = plantaConvertor.convertToListDTO(plantaServiceImpl.findAll());
+		request.setAttribute("plantas", plantasDTO);
+		List<EstadoDTO> estadosDTO = estadoConvertor.convertToListDTO(estadoServiceImpl.findAll());
+		request.setAttribute("estados", estadosDTO);
+		request.setAttribute("seguimiento", new SeguimientoDTO());
+		return "redirect:/seguimientos";
+		}
+	//}
+		
+		/*boolean isEmpty = true;
 		for (int i = 0;i < seguimientos.size();i++)
 		{
 			if ((seguimientos.get(i).getUsuario().getId() == usuarioSecurityServiceImpl.GetIdUser()) && (seguimientos.get(i).getPlanta().getId() == planta) &&(seguimientos.get(i).getEstado().getId() == estado))
@@ -93,7 +120,6 @@ public class SeguimientoController {
 		if (isEmpty == true)
 		{
 			Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT-0300"));
-			calendar.set(2018, 10, 10, 12, 0, 0);
 			if (plantaServiceImpl.findById(planta).getTemporada().getFechaInicio().before(calendar.getTime()) && calendar.getTime().before(plantaServiceImpl.findById(planta).getTemporada().getFechaFin()) )
 			{
 			logger.info("Seguimiento creado con exito");
@@ -105,9 +131,8 @@ public class SeguimientoController {
 			}
 		} else {
 			logger.info("Seguimiento existente");
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		}
-	}
+			return new ResponseEntity<Void>(HttpStatus.CONFLICT);*/
+	
 	
 	@PostMapping("/{id}/regar")
 	public ResponseEntity<Seguimiento> regar(@PathVariable Integer id) {
@@ -163,12 +188,12 @@ public class SeguimientoController {
 		seguimientoServiceImpl.update(usuario, planta, estado,tarea, etapa,seguimiento);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
-
+/*
 	@PostMapping
 	public Seguimiento add(@RequestBody Seguimiento seguimiento) {
 		return seguimientoServiceImpl.create(seguimiento);
 	}
-
+*/
 	@PutMapping(value = "/{id}")
 	public Seguimiento update(@RequestBody Seguimiento seguimiento, @PathVariable Integer id) {
 		seguimiento.setId(id);

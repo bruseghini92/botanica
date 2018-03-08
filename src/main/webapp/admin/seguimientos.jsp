@@ -20,29 +20,38 @@
 		</div>
 	</c:if>
 	<div class="row">
-		<h1>Usuarios</h1>
+		<h1>Seguimientos</h1>
 		<table class="table table-striped">
 			<thead>
 				<tr>
 					<th>Usuario</th>
-					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>Email</th>
-					<th>Tipo de Cuenta</th>
-					<th>Acciones</th>
+					<th>Planta</th>
+					<th>Estado</th>
+					<th>Etapa</th>
+					<th>Tarea</th>
+					<th>Ultimo Riego</th>
+					<th>Fecha Inicio</th>
+					<th>Fecha Abono</th>
+					<th>Fecha Poda</th>
+					<th>Fecha Cosecha</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${usuarios}" var="usuario">
+				<c:forEach items="${seguimientos}" var="seguimientos">
 					<tr>
-						<td>${usuario.user}</td>
-						<td>${usuario.persona.nombre}</td>
-						<td>${usuario.persona.apellido}</td>
-						<td>${usuario.email}</td>
-						<td>${usuario.rol.descripcion}</td>
-						<td><a href="/botanica/admin/usuarioeditar/${usuario.id}"
+						<td>${seguimientos.usuario.user}</td>
+						<td>${seguimientos.planta.nombre}</td>
+						<td>${seguimientos.estado.nombre}</td>
+						<td>${seguimientos.etapa.nombre}</td>
+						<td>${seguimientos.tarea.nombre}</td>
+						<td>${seguimientos.ultimoRiego}</td>
+						<td>${seguimientos.fechaInicio}</td>
+						<td>${seguimientos.fechaAbono}</td>
+						<td>${seguimientos.fechaPoda}</td>
+						<td>${seguimientos.fechaCosecha}</td>	
+						<td><a href="/admin/seguimientoeditar/${seguimientos.id}"
 							class="btn btn-success">Editar</a> <a
-							href="/botanica/admin/usuarioborrar/${usuario.id}" class="btn btn-danger">Borrar</a></td>
+							href="/admin/seguimientoborrar/${seguimientos.id}" class="btn btn-danger">Borrar</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

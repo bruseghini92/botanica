@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/logout")
 public class LogOutController {
+
 	private static final Logger logger = LoggerFactory.getLogger(LogOutController.class);
 
 	@GetMapping

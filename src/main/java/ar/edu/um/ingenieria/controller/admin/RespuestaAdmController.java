@@ -1,95 +1,44 @@
 package ar.edu.um.ingenieria.controller.admin;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.List;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import ar.edu.um.ingenieria.domain.Respuesta;
-import ar.edu.um.ingenieria.domain.Tema;
-import ar.edu.um.ingenieria.service.impl.RespuestaServiceImpl;
-import ar.edu.um.ingenieria.service.impl.TemaServiceImpl;
-import ar.edu.um.ingenieria.service.impl.UsuarioServiceImpl;
+import ar.edu.um.ingenieria.manager.RespuestaManager;
 
-@RestController
-@RequestMapping("/admin/respuesta")
-@Secured({"ROLE_ADMIN"})
+@Controller
+@RequestMapping("/admin")
+@Secured({ "ROLE_ADMIN" })
 public class RespuestaAdmController {
-	
-	@Autowired
-	private RespuestaServiceImpl respuestaServiceImpl;
-	
-	@Autowired
-	private UsuarioServiceImpl usuarioServiceImpl;
-	
-	@Autowired
-	private TemaServiceImpl temaServiceImpl;
 
-	@GetMapping("/leer/{id}")
-	public ResponseEntity<List<Respuesta>> findByTema(@PathVariable Integer id) {
-		if (temaServiceImpl.findById(id) == null) {
-			return new ResponseEntity<List<Respuesta>>(respuestaServiceImpl.findAll(), HttpStatus.OK);
-		} else {
-			Tema tema = temaServiceImpl.findById(id);
-			if(tema.getRespuestas() == null) {
-				new ResponseEntity<List<Respuesta>>(HttpStatus.CONFLICT);
-			}
-			return new ResponseEntity<List<Respuesta>>(tema.getRespuestas(), HttpStatus.OK);
-		}
+	private static final Logger logger = LoggerFactory.getLogger(UsuarioAdmController.class);
+
+	@Autowired
+	private RespuestaManager respuestaManager;
+
+	@RequestMapping(value = "/respuestas", method = RequestMethod.GET)
+	public String listarUsuarios(Model model) {
+		logger.info("AdminController");
+		model.addAttribute("respuestas", respuestaManager.showAll());
+		return "/admin/respuestas";
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<Respuesta> findById(@PathVariable Integer id) {
-		if(respuestaServiceImpl.findById(id) == null) {
-			return new ResponseEntity<Respuesta>(HttpStatus.CONFLICT);
-		}
-		return new ResponseEntity<Respuesta>(respuestaServiceImpl.findById(id),HttpStatus.OK);
+	@GetMapping("/respuestaeditar/{id}")
+	public String show(@PathVariable Integer id, Model model) {
+		model.addAttribute("respuesta", respuestaManager.findById(id));
+		return "/admin/respuestaeditar";
 	}
 
-	@PostMapping
-	public ResponseEntity<Void> create(String texto, Integer idTema, Integer idUsuario, String fecha) throws ParseException {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		Respuesta respuesta = new Respuesta();
-		respuesta.setTexto(texto);
-		respuesta.setFecha(simpleDateFormat.parse(fecha));
-		respuesta.setUsuario(usuarioServiceImpl.findById(idUsuario));
-		respuesta.setTema(temaServiceImpl.findById(idTema));
-		respuestaServiceImpl.create(respuesta);
-		return new ResponseEntity<Void> (HttpStatus.OK);
-	}
-	
-	@PostMapping("/edit/")
-	public ResponseEntity<Void> edit(Integer id, String texto, Integer idTema, Integer idUsuario, String fecha) throws ParseException {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		if (respuestaServiceImpl.findById(id) == null) {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		} else {
-			Respuesta respuesta = respuestaServiceImpl.findById(id);
-			respuesta.setTexto(texto);
-			respuesta.setFecha(simpleDateFormat.parse(fecha));
-			respuesta.setUsuario(usuarioServiceImpl.findById(idUsuario));
-			respuesta.setTema(temaServiceImpl.findById(idTema));
-			respuestaServiceImpl.update(respuesta);
-			return new ResponseEntity<Void>(HttpStatus.OK);
-		}
-	}
-	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Integer id) {
-		if(respuestaServiceImpl.findById(id) == null) {
-			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		}
-		respuestaServiceImpl.remove(respuestaServiceImpl.findById(id));
-		return new ResponseEntity<Void>(HttpStatus.OK);
+	@GetMapping("/respuestaborrar/{id}")
+	public String borrar(@PathVariable Integer id) {
+		respuestaManager.delete(id);
+		return "redirect:/admin/respuestas";
 	}
 }

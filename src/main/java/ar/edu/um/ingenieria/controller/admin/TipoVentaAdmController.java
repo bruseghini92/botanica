@@ -1,74 +1,47 @@
 package ar.edu.um.ingenieria.controller.admin;
 
-import java.util.List;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import ar.edu.um.ingenieria.domain.TipoVenta;
+import org.springframework.web.bind.annotation.RequestMethod;
+import ar.edu.um.ingenieria.manager.TipoVentaManager;
 import ar.edu.um.ingenieria.service.impl.TipoVentaServiceImpl;
 
-@RestController
-@RequestMapping("/admin/tipoventas")
-@Secured({"ROLE_ADMIN"})
+@Controller
+@RequestMapping("/admin")
+@Secured({ "ROLE_ADMIN" })
 public class TipoVentaAdmController {
+
+	private static final Logger logger = LoggerFactory.getLogger(TipoVentaAdmController.class);
 
 	@Autowired
 	private TipoVentaServiceImpl tipoVentaServiceImpl;
-
-	@GetMapping("/")
-	public ResponseEntity<List<TipoVenta>> findAll() {
-		return new ResponseEntity<List<TipoVenta>>(tipoVentaServiceImpl.findAll(), HttpStatus.OK);
-	}
-
-	@GetMapping("/{id}")
-	public ResponseEntity<TipoVenta> findById(@PathVariable Integer id) {
-		if(tipoVentaServiceImpl.findById(id)==null)
-			return new ResponseEntity<TipoVenta>(HttpStatus.NO_CONTENT);
-		else
-			return new ResponseEntity<TipoVenta>(tipoVentaServiceImpl.findById(id),HttpStatus.OK);
-	}
 	
-	@PostMapping("/")
-	public ResponseEntity<Void> insert(String nombre, String descripcion) {
-		TipoVenta tipoVenta = new TipoVenta();
-		tipoVenta.setNombre(nombre);
-		tipoVenta.setDescripcion(descripcion);
-		tipoVentaServiceImpl.create(tipoVenta);
-		return new ResponseEntity<Void>(HttpStatus.OK);
-	}
-	
-	@PostMapping("/edit/")
-	public ResponseEntity<Void> edit(Integer id, String nombre, String descripcion) {
-		if(tipoVentaServiceImpl.findById(id)==null)
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		else {
-			TipoVenta tipoVenta = tipoVentaServiceImpl.findById(id);
-			tipoVenta.setNombre(nombre);
-			tipoVenta.setDescripcion(descripcion);
-			tipoVentaServiceImpl.update(tipoVenta);
-			return new ResponseEntity<Void>(HttpStatus.OK);
-		}
-		
+	@Autowired
+	private TipoVentaManager tipoVentaManager;
+
+	@RequestMapping(value = "/tipoventas", method = RequestMethod.GET)
+	public String listarUsuarios(Model model) {
+		logger.info("AdminController");
+		model.addAttribute("tipoventas", tipoVentaServiceImpl.findAll());
+		return "/admin/tipoventas";
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void>  delete(@PathVariable Integer id) {
-		if(tipoVentaServiceImpl.findById(id)==null)
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		else {
-			tipoVentaServiceImpl.remove(tipoVentaServiceImpl.findById(id));
-			return new ResponseEntity<Void>(HttpStatus.OK);
-		}
-		
+	@GetMapping("/tipoventaeditar/{id}")
+	public String show(@PathVariable Integer id, Model model) {
+		model.addAttribute("Tipo Ventas", tipoVentaManager.findById(id));
+		return "/admin/tipoventaeditar";
+	}
+
+	@GetMapping("/tipoventaborrar/{id}")
+	public String borrar(@PathVariable Integer id) {
+		tipoVentaManager.delete(id);
+		return "redirect:/admin/tipoventas";
 	}
 }
-

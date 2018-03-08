@@ -20,29 +20,28 @@
 		</div>
 	</c:if>
 	<div class="row">
-		<h1>Usuarios</h1>
+		<h1>Temas</h1>
 		<table class="table table-striped">
 			<thead>
 				<tr>
+					<th>Titulo</th>
 					<th>Usuario</th>
-					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>Email</th>
-					<th>Tipo de Cuenta</th>
-					<th>Acciones</th>
+					<th>Texto</th>
+					<th>Categoria</th>
+					<th>Fecha</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${usuarios}" var="usuario">
+				<c:forEach items="${temas}" var="temas">
 					<tr>
-						<td>${usuario.user}</td>
-						<td>${usuario.persona.nombre}</td>
-						<td>${usuario.persona.apellido}</td>
-						<td>${usuario.email}</td>
-						<td>${usuario.rol.descripcion}</td>
-						<td><a href="/botanica/admin/usuarioeditar/${usuario.id}"
+						<td>${temas.titulo}</td>
+						<td>${temas.usuario.user}</td>
+						<td>${temas.texto}</td>
+						<td>${temas.categoria.nombre}</td>
+						<td>${temas.fecha}</td>
+						<td><a href="/admin/temaeditar/${temas.id}"
 							class="btn btn-success">Editar</a> <a
-							href="/botanica/admin/usuarioborrar/${usuario.id}" class="btn btn-danger">Borrar</a></td>
+							href="/admin/temaborrar/${temas.id}" class="btn btn-danger">Borrar</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

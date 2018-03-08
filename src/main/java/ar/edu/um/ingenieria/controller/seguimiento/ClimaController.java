@@ -46,7 +46,6 @@ public class ClimaController {
 		request.setAttribute("climas", climas);
 		request.getRequestDispatcher("climas.jsp").forward(request, response);
 		return URL_LOGIN;
-
 	}
 
 	@GetMapping("/{id}")

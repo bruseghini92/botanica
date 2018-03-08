@@ -9,10 +9,10 @@
 <div class="container" style="margin-top: 100px">
 	<div class="row">
 		<div class="col-md-12">
-			<h2>Registraci&oacute;n</h2>
+			<h2>Editar Tipo Venta</h2>
 
 			<form:form method="POST" data-toggle="validator" id="form"
-				modelAttribute="usuario" role="form" cssClass="form-horizontal"
+				modelAttribute="tipoventas" role="form" cssClass="form-horizontal"
 				accept-charset="utf-8">
 
 				<spring:bind path="user">
@@ -83,7 +83,7 @@
 				<spring:bind path="persona.fechaNacimiento">
 					<div class="form-group ${status.error ? 'has-error' : '' }">
 						<label class="control-label col-md-3"
-							for="persona.fechaNacimiento">Fecha de nacimiento:</label>
+							for="persona.fechaNacimiento">Edad:</label>
 						<div class="col-md-7">
 							 <form:input cssClass="form-control" path="persona.fechaNacimiento"
 								placeholder="dd-MM-yyyy" required="required"/> 

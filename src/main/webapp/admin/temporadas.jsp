@@ -20,29 +20,28 @@
 		</div>
 	</c:if>
 	<div class="row">
-		<h1>Usuarios</h1>
+		<h1>Temporadas</h1>
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>Usuario</th>
 					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>Email</th>
-					<th>Tipo de Cuenta</th>
-					<th>Acciones</th>
+					<th>Descripcion</th>
+					<th>Fecha Inicio</th>
+					<th>Fecha Fin</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${usuarios}" var="usuario">
+				<c:forEach items="${temporadas}" var="temporadas">
 					<tr>
-						<td>${usuario.user}</td>
-						<td>${usuario.persona.nombre}</td>
-						<td>${usuario.persona.apellido}</td>
-						<td>${usuario.email}</td>
-						<td>${usuario.rol.descripcion}</td>
-						<td><a href="/botanica/admin/usuarioeditar/${usuario.id}"
+						<td>${temporadas.nombre}</td>
+						<td>${temporadas.descripcion}</td>
+						<td><fmt:formatDate value="${temporadas.fechaInicio}"
+										pattern="dd/MM/yyyy" /></td> 
+						<td><fmt:formatDate value="${temporadas.fechaFin}"
+										pattern="dd/MM/yyyy" /></td> 
+						<td><a href="/admin/temporadaeditar/${temporadas.id}"
 							class="btn btn-success">Editar</a> <a
-							href="/botanica/admin/usuarioborrar/${usuario.id}" class="btn btn-danger">Borrar</a></td>
+							href="/admin/temporadaborrar/${temporadas.id}" class="btn btn-danger">Borrar</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
