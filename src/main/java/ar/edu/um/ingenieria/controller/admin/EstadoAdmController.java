@@ -15,6 +15,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,17 +68,19 @@ public class EstadoAdmController {
 	}
 
 	@PostMapping("/estados")
-	public String agregar(Model model, HttpServletRequest request, HttpServletResponse response)
+	public String agregar(@ModelAttribute("estado") EstadoDTO estadoDTO,Model model, HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		request.setAttribute("Session", session);
-		request.setAttribute("estados", new EstadoDTO());
+		logger.info("Ingreso en el controlador POST de edicion CATEGORIAS:{" + estadoDTO + "}");
+		estadoServiceImpl.update(estadoConvertor.convertToEntity(estadoDTO));
 		return "redirect:/admin/estados";
 	}
 
 	@GetMapping("/estadoeditar/{id}")
-	public String show(@PathVariable Integer id, Model model) {
-		model.addAttribute("estados", estadoManager.findById(id));
+	public String show(@PathVariable Integer id, Model model,
+			HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		request.setAttribute("Session", session);
+		model.addAttribute("estado", estadoManager.findById(id));
 		return "/admin/estadoeditar";
 	}
 }

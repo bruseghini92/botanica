@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ar.edu.um.ingenieria.controller.seguimiento.SeguimientoController;
 import ar.edu.um.ingenieria.convertor.CategoriaConvertor;
 import ar.edu.um.ingenieria.dto.CategoriaDTO;
-import ar.edu.um.ingenieria.dto.UsuarioDTO;
 import ar.edu.um.ingenieria.manager.CategoriaManager;
 import ar.edu.um.ingenieria.service.impl.CategoriaServiceImpl;
 
@@ -77,7 +76,10 @@ public class CategoriaAdmController {
 	}
 
 	@GetMapping("/categoriaeditar/{id}")
-	public String show(@PathVariable Integer id, Model model) {
+	public String show(@PathVariable Integer id, Model model,
+			HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		request.setAttribute("Session", session);
 		model.addAttribute("categoria", categoriaManager.findById(id));
 		return "/admin/categoriaeditar";
 	}

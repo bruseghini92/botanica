@@ -15,7 +15,7 @@
 				modelAttribute="seguimiento" role="form" cssClass="form-horizontal"
 				accept-charset="utf-8">
 
-				<spring:bind path="user">
+				<spring:bind path="seguimiento.usuario">
 					<div class="form-group ${status.error ? 'has-error' : '' }">
 						<label class="control-label col-md-3" for="user">Usuario:</label>
 						<div class="col-md-7">

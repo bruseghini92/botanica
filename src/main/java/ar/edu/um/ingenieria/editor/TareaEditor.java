@@ -4,20 +4,21 @@ import java.beans.PropertyEditorSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ar.edu.um.ingenieria.domain.Tarea;
-import ar.edu.um.ingenieria.service.impl.TareaServiceImpl;
+import ar.edu.um.ingenieria.dto.TareaDTO;
+import ar.edu.um.ingenieria.manager.TareaManager;
 
 public class TareaEditor extends PropertyEditorSupport {
 	@Autowired
-	private TareaServiceImpl tareaServiceImpl;
+	private TareaManager tareaManager;
 
-	public TareaEditor(TareaServiceImpl tareaServiceImpl) {
-		this.tareaServiceImpl = tareaServiceImpl;
+	public TareaEditor(TareaManager tareaManager) {
+		this.tareaManager = tareaManager;
 	}
 
 	@Override
 	public void setAsText(String text) throws IllegalArgumentException {
-		Tarea tarea = tareaServiceImpl.findById(Integer.parseInt(text));
-		setValue(tarea);
+		int id = Integer.parseInt(text);
+		TareaDTO tareaDTO = id == 0 ? null : tareaManager.findById(id);
+		setValue(tareaDTO);
 	}
 }

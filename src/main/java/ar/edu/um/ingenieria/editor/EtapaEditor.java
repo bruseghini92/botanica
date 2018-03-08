@@ -4,20 +4,21 @@ import java.beans.PropertyEditorSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ar.edu.um.ingenieria.domain.Etapa;
-import ar.edu.um.ingenieria.service.impl.EtapaServiceImpl;
+import ar.edu.um.ingenieria.dto.EtapaDTO;
+import ar.edu.um.ingenieria.manager.EtapaManager;
 
 public class EtapaEditor extends PropertyEditorSupport {
 	@Autowired
-	private EtapaServiceImpl etapaServiceImpl;
+	private EtapaManager etapaManager;
 
-	public EtapaEditor(EtapaServiceImpl etapaServiceImpl) {
-		this.etapaServiceImpl = etapaServiceImpl;
+	public EtapaEditor(EtapaManager etapaManager) {
+		this.etapaManager = etapaManager;
 	}
 
 	@Override
 	public void setAsText(String text) throws IllegalArgumentException {
-		Etapa etapa = etapaServiceImpl.findById(Integer.parseInt(text));
-		setValue(etapa);
+		int id = Integer.parseInt(text);
+		EtapaDTO etapaDTO = id == 0 ? null : etapaManager.findById(id);
+		setValue(etapaDTO);
 	}
 }

@@ -33,9 +33,9 @@
 					<tr>
 						<td>${estados.nombre}</td>
 						<td>${estados.descripcion}</td>
-						<td><a href="/admin/categoriaeditar/${estados.id}"
+						<td><a href="/botanica/admin/estadoeditar/${estados.id}"
 							class="btn btn-success">Editar</a> <a
-							href="/admin/categoriaborrar/${estados.id}" class="btn btn-danger">Borrar</a></td>
+							href="/botanica/admin/estadoborrar/${estados.id}" class="btn btn-danger">Borrar</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

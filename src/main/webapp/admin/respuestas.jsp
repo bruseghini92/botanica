@@ -37,9 +37,9 @@
 						<td>${respuestas.texto}</td>
 						<td>${respuestas.usuario.user}</td>
 						<td>${respuestas.fecha}</td>
-						<td><a href="/admin/respuestaeditar/${respuestas.id}"
+						<td><a href="/botanica/admin/respuestaeditar/${respuestas.id}"
 							class="btn btn-success">Editar</a> <a
-							href="/admin/respuestaborrar/${respuestas.id}" class="btn btn-danger">Borrar</a></td>
+							href="/botanica/admin/respuestaborrar/${respuestas.id}" class="btn btn-danger">Borrar</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

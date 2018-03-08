@@ -11,54 +11,15 @@
 		<div class="col-md-12">
 			<h2>Editar Planta</h2>
 
-			<form:form method="POST" data-toggle="validator" id="form"
+			<form:form method="POST" data-toggle="validator" id="form" action="/botanica/admin/plantas"
 				modelAttribute="planta" role="form" cssClass="form-horizontal"
 				accept-charset="utf-8">
 
-				<spring:bind path="user">
+				<spring:bind path="nombre">
 					<div class="form-group ${status.error ? 'has-error' : '' }">
-						<label class="control-label col-md-3" for="user">Usuario:</label>
+						<label class="control-label col-md-3" for="nombre">Nombre:</label>
 						<div class="col-md-7">
-							<form:input cssClass="form-control" path="user"
-								placeholder="Usuario" />
-							<c:if test="${status.error}">
-								<span class="text-danger">${status.errorMessage}</span>
-							</c:if>
-						</div>
-					</div>
-				</spring:bind>
-
-				<spring:bind path="email">
-					<div class="form-group ${status.error ? 'has-error' : '' }">
-						<label class="control-label col-md-3" for="email">email:</label>
-						<div class="col-md-7">
-							<form:input cssClass="form-control" path="email"
-								placeholder="Email" />
-							<c:if test="${status.error}">
-								<span class="text-danger">${status.errorMessage}</span>
-							</c:if>
-						</div>
-					</div>
-				</spring:bind>
-
-				<spring:bind path="password">
-					<div class="form-group ${status.error ? 'has-error' : '' }">
-						<label class="control-label col-md-3" for="password">Password:</label>
-						<div class="col-md-7">
-							<form:password cssClass="form-control" path="password"
-								placeholder="Password" />
-							<c:if test="${status.error}">
-								<span class="text-danger">${status.errorMessage}</span>
-							</c:if>
-						</div>
-					</div>
-				</spring:bind>
-
-				<spring:bind path="persona.nombre">
-					<div class="form-group ${status.error ? 'has-error' : '' }">
-						<label class="control-label col-md-3" for="usuario.persona.nombre">Nombre:</label>
-						<div class="col-md-7">
-							<form:input cssClass="form-control" path="persona.nombre"
+							<form:input cssClass="form-control" path="nombre"
 								placeholder="Nombre" />
 							<c:if test="${status.error}">
 								<span class="text-danger">${status.errorMessage}</span>
@@ -67,12 +28,55 @@
 					</div>
 				</spring:bind>
 
-				<spring:bind path="persona.apellido">
+				<spring:bind path="suelo">
+					<label class="control-label col-md-3" for="suelo">Tipo de suelo:</label>
+					<div class="col-md-3">
+						<form:select path="suelo" cssClass="form-control">
+							<c:forEach items="${suelo}" var="suelo">
+								<form:option value="${suelo.id}" label="${suelo.nombre}" />
+							</c:forEach>
+						</form:select>
+						<c:if test="${status.error}">
+							<span class="text-danger">${status.errorMessage}</span>
+						</c:if>
+					</div>
+				</spring:bind>
+
+				<spring:bind path="clima">
+					<label class="control-label col-md-3" for="clima">Tipo de
+						Clima:</label>
+					<div class="col-md-3">
+						<form:select path="clima" cssClass="form-control">
+							<c:forEach items="${clima}" var="clima">
+								<form:option value="${clima.id}" label="${clima.nombre}" />
+							</c:forEach>
+						</form:select>
+						<c:if test="${status.error}">
+							<span class="text-danger">${status.errorMessage}</span>
+						</c:if>
+					</div>
+				</spring:bind>
+
+				<spring:bind path="temporada">
+					<label class="control-label col-md-3" for="temporada">Temporada:</label>
+					<div class="col-md-3">
+						<form:select path="temporada" cssClass="form-control">
+							<c:forEach items="${temporada}" var="temporada">
+								<form:option value="${temporada.id}" label="${temporada.nombre}" />
+							</c:forEach>
+						</form:select>
+						<c:if test="${status.error}">
+							<span class="text-danger">${status.errorMessage}</span>
+						</c:if>
+					</div>
+				</spring:bind>
+
+				<spring:bind path="descripcion">
 					<div class="form-group ${status.error ? 'has-error' : '' }">
-						<label class="control-label col-md-3" for="persona.apellido">Apellido:</label>
+						<label class="control-label col-md-3" for="descripcion">Descripcion:</label>
 						<div class="col-md-7">
-							<form:input cssClass="form-control" path="persona.apellido"
-								placeholder="Apellido" />
+							<form:input cssClass="form-control" path="descripcion"
+								placeholder="Descripcion" />
 							<c:if test="${status.error}">
 								<span class="text-danger">${status.errorMessage}</span>
 							</c:if>
@@ -80,13 +84,13 @@
 					</div>
 				</spring:bind>
 
-				<spring:bind path="persona.fechaNacimiento">
+				<spring:bind path="tiempoRiego">
 					<div class="form-group ${status.error ? 'has-error' : '' }">
 						<label class="control-label col-md-3"
-							for="persona.fechaNacimiento">Edad:</label>
+							for="tiempoRiego">Tiempo de Riego:</label>
 						<div class="col-md-7">
-							 <form:input cssClass="form-control" path="persona.fechaNacimiento"
-								placeholder="dd-MM-yyyy" required="required"/> 
+							 <form:input cssClass="form-control" path="tiempoRiego"
+								required="required"/> 
 							<c:if test="${status.error}">
 								<span class="text-danger">${status.errorMessage}</span>
 							</c:if>
@@ -94,13 +98,12 @@
 					</div>
 				</spring:bind>
 				
-				<spring:bind path="rol">
-					<label class="control-label col-md-3" for="rol">Tipo de
-						Usuario:</label>
+				<spring:bind path="tipo">
+					<label class="control-label col-md-3" for="tipo">Tipo de planta:</label>
 					<div class="col-md-3">
-						<form:select path="rol" cssClass="form-control">
-							<c:forEach items="${rol}" var="rol">
-								<form:option value="${rol.id}" label="${rol.descripcion}" />
+						<form:select path="tipo" cssClass="form-control">
+							<c:forEach items="${tipo}" var="tipo">
+								<form:option value="${tipo.id}" label="${tipo.nombre}" />
 							</c:forEach>
 						</form:select>
 						<c:if test="${status.error}">

@@ -15,9 +15,11 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import ar.edu.um.ingenieria.controller.seguimiento.SeguimientoController;
 import ar.edu.um.ingenieria.convertor.ClimaConvertor;
 import ar.edu.um.ingenieria.dto.ClimaDTO;
@@ -67,17 +69,19 @@ public class ClimaAdmController {
 	}
 
 	@PostMapping("/climas")
-	public String agregar(Model model, HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		request.setAttribute("Session", session);
-		request.setAttribute("climas", new ClimaDTO());
+	public String agregar(@ModelAttribute("clima") ClimaDTO climaDTO, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		logger.info("Ingreso en el controlador POST de edicion CLIMAS:{" + climaDTO + "}");
+		climaServiceImpl.update(climaConvertor.convertToEntity(climaDTO));
 		return "redirect:/admin/climas";
 	}
 
 	@GetMapping("/climaeditar/{id}")
-	public String show(@PathVariable Integer id, Model model) {
-		model.addAttribute("climas", climaManager.findById(id));
+	public String show(@PathVariable Integer id, Model model,
+			HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		request.setAttribute("Session", session);
+		model.addAttribute("clima", climaManager.findById(id));
 		return "/admin/climaeditar";
 	}
 }

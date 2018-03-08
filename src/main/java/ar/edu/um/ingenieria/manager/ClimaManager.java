@@ -37,7 +37,7 @@ private static final Logger logger = LoggerFactory.getLogger(ClimaManager.class)
 		return null;
 	}
 
-	public ClimaDTO findById(Integer id) {
+	public ClimaDTO findById(int id) {
 		return climaConvertor.convertToDTO(climaServiceImpl.findById(id));
 	}
 

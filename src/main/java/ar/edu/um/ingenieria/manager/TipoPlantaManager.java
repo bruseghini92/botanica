@@ -41,7 +41,7 @@ public class TipoPlantaManager {
 		return null;
 	}
 
-	public TipoPlantaDTO findById(Integer id) {
+	public TipoPlantaDTO findById(int id) {
 		return tipoPlantaConvertor.convertToDTO(tipoPlantaServiceImpl.findById(id));
 	}
 

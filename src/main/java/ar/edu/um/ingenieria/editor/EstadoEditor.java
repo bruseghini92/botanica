@@ -4,20 +4,21 @@ import java.beans.PropertyEditorSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ar.edu.um.ingenieria.domain.Estado;
-import ar.edu.um.ingenieria.service.impl.EstadoServiceImpl;
+import ar.edu.um.ingenieria.dto.EstadoDTO;
+import ar.edu.um.ingenieria.manager.EstadoManager;
 
 public class EstadoEditor extends PropertyEditorSupport {
 	@Autowired
-	private EstadoServiceImpl estadoServiceImpl;
+	private EstadoManager estadoManager;
 
-	public EstadoEditor(EstadoServiceImpl estadoServiceImpl) {
-		this.estadoServiceImpl = estadoServiceImpl;
+	public EstadoEditor(EstadoManager estadoManager) {
+		this.estadoManager = estadoManager;
 	}
 
 	@Override
 	public void setAsText(String text) throws IllegalArgumentException {
-		Estado estado = estadoServiceImpl.findById(Integer.parseInt(text));
-		setValue(estado);
+		int id = Integer.parseInt(text);
+		EstadoDTO estadoDTO = id == 0 ? null : estadoManager.findById(id);
+		setValue(estadoDTO);
 	}
 }

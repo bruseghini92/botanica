@@ -4,20 +4,22 @@ import java.beans.PropertyEditorSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ar.edu.um.ingenieria.domain.Usuario;
-import ar.edu.um.ingenieria.service.impl.UsuarioServiceImpl;
+import ar.edu.um.ingenieria.dto.UsuarioDTO;
+import ar.edu.um.ingenieria.manager.UsuarioManager;
 
 public class UsuarioEditor extends PropertyEditorSupport {
-	@Autowired
-	private UsuarioServiceImpl usuarioServiceImpl;
 
-	public UsuarioEditor(UsuarioServiceImpl usuarioServiceImpl) {
-		this.usuarioServiceImpl = usuarioServiceImpl;
+	@Autowired
+	private UsuarioManager usuarioManager;
+
+	public UsuarioEditor(UsuarioManager usuarioManager) {
+		this.usuarioManager = usuarioManager;
 	}
 
 	@Override
 	public void setAsText(String text) throws IllegalArgumentException {
-		Usuario usuario = usuarioServiceImpl.findById(Integer.parseInt(text));
-		setValue(usuario);
+		int id = Integer.parseInt(text);
+		UsuarioDTO usuarioDTO = id == 0 ? null : usuarioManager.findById(id);
+		setValue(usuarioDTO);
 	}
 }

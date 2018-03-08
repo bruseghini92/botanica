@@ -43,9 +43,9 @@
 						<td>${plantas.descripcion}</td>
 						<td>${plantas.tiempoRiego}</td>
 						<td>${plantas.tipo.nombre}</td>
-						<td><a href="/admin/plantaeditar/${plantas.id}"
+						<td><a href="/botanica/admin/plantaeditar/${plantas.id}"
 							class="btn btn-success">Editar</a> <a
-							href="/admin/plantaborrar/${plantas.id}" class="btn btn-danger">Borrar</a></td>
+							href="/botanica/admin/plantaborrar/${plantas.id}" class="btn btn-danger">Borrar</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

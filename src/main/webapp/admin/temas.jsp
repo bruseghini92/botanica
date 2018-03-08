@@ -39,9 +39,9 @@
 						<td>${temas.texto}</td>
 						<td>${temas.categoria.nombre}</td>
 						<td>${temas.fecha}</td>
-						<td><a href="/admin/temaeditar/${temas.id}"
+						<td><a href="/botanica/admin/temaeditar/${temas.id}"
 							class="btn btn-success">Editar</a> <a
-							href="/admin/temaborrar/${temas.id}" class="btn btn-danger">Borrar</a></td>
+							href="/botanica/admin/temaborrar/${temas.id}" class="btn btn-danger">Borrar</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

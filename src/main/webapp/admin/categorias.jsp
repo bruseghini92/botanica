@@ -35,7 +35,8 @@
 						<td>${categoria.descripcion}</td>
 						<td><a href="/botanica/admin/categoriaeditar/${categoria.id}"
 							class="btn btn-success">Editar</a> <a
-							href="/botanica/admin/categoriaborrar/${categoria.id}" class="btn btn-danger">Borrar</a></td>
+							href="/botanica/admin/categoriaborrar/${categoria.id}" 
+							class="btn btn-danger">Borrar</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

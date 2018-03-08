@@ -29,13 +29,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${climas}" var="climas">
+				<c:forEach items="${climas}" var="clima">
 					<tr>
-						<td>${climas.nombre}</td>
-						<td>${climas.descripcion}</td>
-						<td><a href="/admin/categoriaeditar/${climas.id}"
+						<td>${clima.nombre}</td>
+						<td>${clima.descripcion}</td>
+						<td><a href="/botanica/admin/climaeditar/${clima.id}"
 							class="btn btn-success">Editar</a> <a
-							href="/admin/climaborrar/${climas.id}" class="btn btn-danger">Borrar</a></td>
+							href="/botanica/admin/climaborrar/${clima.id}" 
+							class="btn btn-danger">Borrar</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

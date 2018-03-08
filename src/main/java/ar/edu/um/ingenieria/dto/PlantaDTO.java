@@ -1,6 +1,9 @@
 package ar.edu.um.ingenieria.dto;
 
 import java.sql.Date;
+
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,6 +27,7 @@ public class PlantaDTO {
 
 	private ClimaDTO clima;
 
+	@Temporal(TemporalType.TIME)
 	@DateTimeFormat(pattern = "HH:mm:ss")
 	private Date tiempoRiego;
 

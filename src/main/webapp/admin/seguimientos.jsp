@@ -49,9 +49,9 @@
 						<td>${seguimientos.fechaAbono}</td>
 						<td>${seguimientos.fechaPoda}</td>
 						<td>${seguimientos.fechaCosecha}</td>	
-						<td><a href="/admin/seguimientoeditar/${seguimientos.id}"
+						<td><a href="/botanica/admin/seguimientoeditar/${seguimientos.id}"
 							class="btn btn-success">Editar</a> <a
-							href="/admin/seguimientoborrar/${seguimientos.id}" class="btn btn-danger">Borrar</a></td>
+							href="/botanica/admin/seguimientoborrar/${seguimientos.id}" class="btn btn-danger">Borrar</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

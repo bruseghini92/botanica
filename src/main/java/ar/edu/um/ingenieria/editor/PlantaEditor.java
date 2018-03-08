@@ -4,20 +4,22 @@ import java.beans.PropertyEditorSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ar.edu.um.ingenieria.domain.Planta;
-import ar.edu.um.ingenieria.service.impl.PlantaServiceImpl;
+import ar.edu.um.ingenieria.dto.PlantaDTO;
+import ar.edu.um.ingenieria.manager.PlantaManager;
 
 public class PlantaEditor extends PropertyEditorSupport {
-	@Autowired
-	private PlantaServiceImpl plantaServiceImpl;
 
-	public PlantaEditor(PlantaServiceImpl plantaServiceImpl) {
-		this.plantaServiceImpl = plantaServiceImpl;
+	@Autowired
+	private PlantaManager plantaManager;
+
+	public PlantaEditor(PlantaManager plantaManager) {
+		this.plantaManager = plantaManager;
 	}
 
 	@Override
 	public void setAsText(String text) throws IllegalArgumentException {
-		Planta planta = plantaServiceImpl.findById(Integer.parseInt(text));
-		setValue(planta);
+		int id = Integer.parseInt(text);
+		PlantaDTO plantaDTO = id == 0 ? null : plantaManager.findById(id);
+		setValue(plantaDTO);
 	}
 }

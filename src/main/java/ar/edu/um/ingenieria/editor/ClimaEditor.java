@@ -4,20 +4,21 @@ import java.beans.PropertyEditorSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ar.edu.um.ingenieria.domain.Clima;
-import ar.edu.um.ingenieria.service.impl.ClimaServiceImpl;
+import ar.edu.um.ingenieria.dto.ClimaDTO;
+import ar.edu.um.ingenieria.manager.ClimaManager;
 
 public class ClimaEditor extends PropertyEditorSupport {
 	@Autowired
-	private ClimaServiceImpl climaService;
+	private ClimaManager climaManager;
 
-	public ClimaEditor(ClimaServiceImpl climaService) {
-		this.climaService = climaService;
+	public ClimaEditor(ClimaManager climaManager) {
+		this.climaManager = climaManager;
 	}
 
 	@Override
 	public void setAsText(String text) throws IllegalArgumentException {
-		Clima clima = climaService.findById(Integer.parseInt(text));
-		setValue(clima);
+		int id = Integer.parseInt(text);
+		ClimaDTO climaDTO = id == 0 ? null : climaManager.findById(id);
+		setValue(climaDTO);
 	}
 }

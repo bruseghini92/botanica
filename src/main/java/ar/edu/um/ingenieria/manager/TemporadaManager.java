@@ -41,7 +41,7 @@ private static final Logger logger = LoggerFactory.getLogger(UsuarioManager.clas
 		return null;
 	}
 
-	public TemporadaDTO findById(Integer id) {
+	public TemporadaDTO findById(int id) {
 		return temporadaConvertor.convertToDTO(temporadaServiceImpl.findById(id));
 	}
 

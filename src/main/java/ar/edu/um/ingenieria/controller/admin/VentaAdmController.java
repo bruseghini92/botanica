@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import ar.edu.um.ingenieria.controller.seguimiento.SeguimientoController;
 import ar.edu.um.ingenieria.convertor.VentaConvertor;
-import ar.edu.um.ingenieria.dto.CategoriaDTO;
 import ar.edu.um.ingenieria.dto.VentaDTO;
 import ar.edu.um.ingenieria.manager.VentaManager;
 import ar.edu.um.ingenieria.service.impl.VentaServiceImpl;

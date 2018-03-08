@@ -1,5 +1,13 @@
 package ar.edu.um.ingenieria.controller.admin;
 
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,10 +15,16 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
+import ar.edu.um.ingenieria.convertor.CategoriaConvertor;
+import ar.edu.um.ingenieria.convertor.TemaConvertor;
+import ar.edu.um.ingenieria.dto.TemaDTO;
 import ar.edu.um.ingenieria.manager.TemaManager;
+import ar.edu.um.ingenieria.service.impl.CategoriaServiceImpl;
 import ar.edu.um.ingenieria.service.impl.TemaServiceImpl;
 
 @Controller
@@ -24,24 +38,58 @@ public class TemaAdmController {
 	private TemaServiceImpl temaServiceImpl;
 	
 	@Autowired
+	private CategoriaServiceImpl categoriaServiceImpl;
+
+	@Autowired
 	private TemaManager temaManager;
 
-	@RequestMapping(value = "/temas", method = RequestMethod.GET)
-	public String listarUsuarios(Model model) {
-		logger.info("AdminController");
-		model.addAttribute("temas", temaServiceImpl.findAll());
+	@Autowired
+	private TemaConvertor temaConvertor;
+	
+	@Autowired
+	private CategoriaConvertor categoriaConvertor;
+
+	@GetMapping("/temas")
+	public String indexPage(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		request.setAttribute("Session", session);
+		List<TemaDTO> temas = temaConvertor.convertToListDTO(temaServiceImpl.findAll());
+		logger.info("Datos de los temas:{" + temas + "}");
+		request.setAttribute("temas", temas);
 		return "/admin/temas";
 	}
 
-	@GetMapping("/temaeditar/{id}")
-	public String show(@PathVariable Integer id, Model model) {
-		model.addAttribute("tema", temaManager.findById(id));
-		return "/admin/seguimientoeditar";
+	@GetMapping("/temas/{id}")
+	public String show(@PathVariable Integer id, HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		request.setAttribute("Session", session);
+		request.setAttribute("temas", temaConvertor.convertToListDTO(temaServiceImpl.findAll()));
+		request.setAttribute("categorias", categoriaConvertor.convertToListDTO(categoriaServiceImpl.findAll()));
+		return "redirect:/admin/categorias";
 	}
 
 	@GetMapping("/temaborrar/{id}")
 	public String borrar(@PathVariable Integer id) {
 		temaManager.delete(id);
 		return "redirect:/admin/temas";
+	}
+
+	@PostMapping("/temas")
+	public String agregar(@ModelAttribute("tema") TemaDTO temaDTO, Model model, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		logger.info("Ingreso en el controlador POST de edicion CATEGORIAS:{" + temaDTO + "}");
+		temaServiceImpl.update(temaConvertor.convertToEntity(temaDTO));
+		return "redirect:/admin/temas";
+	}
+
+	@GetMapping("/temaeditar/{id}")
+	public String show(@PathVariable Integer id, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		request.setAttribute("Session", session);
+		model.addAttribute("tema", temaManager.findById(id));
+		return "/admin/temaeditar";
 	}
 }

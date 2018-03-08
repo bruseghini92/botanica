@@ -36,7 +36,7 @@ private static final Logger logger = LoggerFactory.getLogger(ClimaManager.class)
 		return null;
 	}
 
-	public SueloDTO findById(Integer id) {
+	public SueloDTO findById(int id) {
 		return sueloConvertor.convertToDTO(sueloServiceImpl.findById(id));
 	}
 

@@ -15,12 +15,12 @@
 				modelAttribute="tema" role="form" cssClass="form-horizontal"
 				accept-charset="utf-8">
 
-				<spring:bind path="user">
+				<spring:bind path="titulo">
 					<div class="form-group ${status.error ? 'has-error' : '' }">
-						<label class="control-label col-md-3" for="user">Usuario:</label>
+						<label class="control-label col-md-3" for="titulo">Titulo:</label>
 						<div class="col-md-7">
-							<form:input cssClass="form-control" path="user"
-								placeholder="Usuario" />
+							<form:input cssClass="form-control" path="titulo"
+								placeholder="Titulo" />
 							<c:if test="${status.error}">
 								<span class="text-danger">${status.errorMessage}</span>
 							</c:if>
@@ -28,12 +28,12 @@
 					</div>
 				</spring:bind>
 
-				<spring:bind path="email">
+				<spring:bind path="texto">
 					<div class="form-group ${status.error ? 'has-error' : '' }">
-						<label class="control-label col-md-3" for="email">email:</label>
+						<label class="control-label col-md-3" for="texto">Texto::</label>
 						<div class="col-md-7">
-							<form:input cssClass="form-control" path="email"
-								placeholder="Email" />
+							<form:input cssClass="form-control" path="texto"
+								placeholder="Texto" />
 							<c:if test="${status.error}">
 								<span class="text-danger">${status.errorMessage}</span>
 							</c:if>
@@ -41,12 +41,11 @@
 					</div>
 				</spring:bind>
 
-				<spring:bind path="password">
+				<spring:bind path="categoria.nombre">
 					<div class="form-group ${status.error ? 'has-error' : '' }">
-						<label class="control-label col-md-3" for="password">Password:</label>
+						<label class="control-label col-md-3" for="categoria.nombre">Categoria:</label>
 						<div class="col-md-7">
-							<form:password cssClass="form-control" path="password"
-								placeholder="Password" />
+							<form:password cssClass="form-control" path="categoria.nombre"/>
 							<c:if test="${status.error}">
 								<span class="text-danger">${status.errorMessage}</span>
 							</c:if>
@@ -54,61 +53,17 @@
 					</div>
 				</spring:bind>
 
-				<spring:bind path="persona.nombre">
+				<spring:bind path="fecha">
 					<div class="form-group ${status.error ? 'has-error' : '' }">
-						<label class="control-label col-md-3" for="usuario.persona.nombre">Nombre:</label>
+						<label class="control-label col-md-3" for="fecha">Fecha:</label>
 						<div class="col-md-7">
-							<form:input cssClass="form-control" path="persona.nombre"
-								placeholder="Nombre" />
+							<form:input cssClass="form-control" path="fecha"/>
 							<c:if test="${status.error}">
 								<span class="text-danger">${status.errorMessage}</span>
 							</c:if>
 						</div>
 					</div>
 				</spring:bind>
-
-				<spring:bind path="persona.apellido">
-					<div class="form-group ${status.error ? 'has-error' : '' }">
-						<label class="control-label col-md-3" for="persona.apellido">Apellido:</label>
-						<div class="col-md-7">
-							<form:input cssClass="form-control" path="persona.apellido"
-								placeholder="Apellido" />
-							<c:if test="${status.error}">
-								<span class="text-danger">${status.errorMessage}</span>
-							</c:if>
-						</div>
-					</div>
-				</spring:bind>
-
-				<spring:bind path="persona.fechaNacimiento">
-					<div class="form-group ${status.error ? 'has-error' : '' }">
-						<label class="control-label col-md-3"
-							for="persona.fechaNacimiento">Edad:</label>
-						<div class="col-md-7">
-							 <form:input cssClass="form-control" path="persona.fechaNacimiento"
-								placeholder="dd-MM-yyyy" required="required"/> 
-							<c:if test="${status.error}">
-								<span class="text-danger">${status.errorMessage}</span>
-							</c:if>
-						</div>
-					</div>
-				</spring:bind>
-				
-				<spring:bind path="rol">
-					<label class="control-label col-md-3" for="rol">Tipo de
-						Usuario:</label>
-					<div class="col-md-3">
-						<form:select path="rol" cssClass="form-control">
-							<c:forEach items="${rol}" var="rol">
-								<form:option value="${rol.id}" label="${rol.descripcion}" />
-							</c:forEach>
-						</form:select>
-						<c:if test="${status.error}">
-							<span class="text-danger">${status.errorMessage}</span>
-						</c:if>
-					</div>
-				</spring:bind>
-
 				<button type="submit">Enviar</button>
 			</form:form>
 		</div>
