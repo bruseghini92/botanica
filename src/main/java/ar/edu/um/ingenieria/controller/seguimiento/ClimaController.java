@@ -30,7 +30,7 @@ public class ClimaController {
 
 	@Autowired
 	private ClimaServiceImpl climaServiceImpl;
-	
+
 	@Autowired
 	private ClimaConvertor climaConvertor;
 
@@ -52,7 +52,7 @@ public class ClimaController {
 	public String show(@PathVariable Integer id, HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-			request.setAttribute("Session", session);
+		request.setAttribute("Session", session);
 		ClimaDTO climaDTO = climaConvertor.convertToDTO(climaServiceImpl.findById(id));
 		logger.info("Datos del clima:{" + climaDTO + "}");
 		request.setAttribute("climas", climaDTO);

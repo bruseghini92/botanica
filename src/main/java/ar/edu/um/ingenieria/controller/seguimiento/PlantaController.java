@@ -28,7 +28,7 @@ public class PlantaController {
 
 	@Autowired
 	private PlantaServiceImpl plantaServiceImpl;
-	
+
 	@Autowired
 	private PlantaConvertor plantaConvertor;
 

@@ -14,9 +14,9 @@ import ar.edu.um.ingenieria.dto.CategoriaDTO;
 public class CategoriaConvertor {
 	@Autowired
 	private Mapper mapper;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(SeguimientoConvertor.class);
-		
+
 	public CategoriaDTO convertToDTO(Categoria categoria) {
 		try {
 			CategoriaDTO cdto = mapper.map(categoria, CategoriaDTO.class);
@@ -26,8 +26,8 @@ public class CategoriaConvertor {
 		}
 		return null;
 	}
-	
-	public Categoria convertToEntity (CategoriaDTO cdto) {
+
+	public Categoria convertToEntity(CategoriaDTO cdto) {
 		try {
 			Categoria categoria = mapper.map(cdto, Categoria.class);
 			return categoria;
@@ -36,8 +36,8 @@ public class CategoriaConvertor {
 		}
 		return null;
 	}
-	
-	public List<CategoriaDTO> convertToListDTO(List<Categoria> listCategoria){
+
+	public List<CategoriaDTO> convertToListDTO(List<Categoria> listCategoria) {
 		List<CategoriaDTO> listCategoriaDTO = new ArrayList<CategoriaDTO>();
 		CategoriaDTO categoriaDTO = null;
 		try {
@@ -49,6 +49,6 @@ public class CategoriaConvertor {
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
-		return null;		
+		return null;
 	}
 }
