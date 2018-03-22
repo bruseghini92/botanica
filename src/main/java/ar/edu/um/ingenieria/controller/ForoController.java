@@ -11,20 +11,13 @@ import org.springframework.ui.Model;
 @Controller
 @RequestMapping("/foro")
 public class ForoController {
-	private static final Logger logger = LoggerFactory
-			.getLogger(LoginController.class);
-	private static final String URL_LOGIN = "index";
-	
-	@RequestMapping(value="/foro", method = RequestMethod.GET)
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+	private static final String URL_LOGIN = "/frontend/index";
+
+	@RequestMapping(value = "/foro", method = RequestMethod.GET)
 	public String foroIndex(Model model) {
 		logger.info("foro controller");
 		return URL_LOGIN;
 	}
-	
-	
-	
-	
-	
-	
 
 }

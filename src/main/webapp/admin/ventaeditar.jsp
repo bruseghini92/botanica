@@ -12,7 +12,7 @@
 			<h2>Editar Ventas</h2>
 
 			<form:form method="POST" data-toggle="validator" id="form"
-				modelAttribute="ventas" role="form" cssClass="form-horizontal"
+				modelAttribute="venta" role="form" cssClass="form-horizontal"
 				accept-charset="utf-8">
 
 				<spring:bind path="producto">
@@ -41,12 +41,12 @@
 					</div>
 				</spring:bind>
 
-				<spring:bind path="password">
+				<spring:bind path="cerrado">
 					<div class="form-group ${status.error ? 'has-error' : '' }">
-						<label class="control-label col-md-3" for="password">Password:</label>
+						<label class="control-label col-md-3" for="cerrado">Cerrado:</label>
 						<div class="col-md-7">
-							<form:password cssClass="form-control" path="password"
-								placeholder="Password" />
+							<form:password cssClass="form-control" path="cerrado"
+								placeholder="Cerrado" />
 							<c:if test="${status.error}">
 								<span class="text-danger">${status.errorMessage}</span>
 							</c:if>
@@ -54,11 +54,11 @@
 					</div>
 				</spring:bind>
 
-				<spring:bind path="persona.nombre">
+				<spring:bind path="venta.usuario.user">
 					<div class="form-group ${status.error ? 'has-error' : '' }">
-						<label class="control-label col-md-3" for="usuario.persona.nombre">Nombre:</label>
+						<label class="control-label col-md-3" for="venta.usuario.user">Nombre:</label>
 						<div class="col-md-7">
-							<form:input cssClass="form-control" path="persona.nombre"
+							<form:input cssClass="form-control" path="venta.usuario.user"
 								placeholder="Nombre" />
 							<c:if test="${status.error}">
 								<span class="text-danger">${status.errorMessage}</span>

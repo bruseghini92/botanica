@@ -23,16 +23,16 @@ import ar.edu.um.ingenieria.service.impl.EstadoServiceImpl;
 
 @Controller
 @RequestMapping("/estados")
-@Secured({"ROLE_USER" , "ROLE_VENDEDOR", "ROLE_ADMIN"})
+@Secured({ "ROLE_USER", "ROLE_VENDEDOR", "ROLE_ADMIN" })
 public class EstadoController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(EstadoController.class);
-	
+
 	private static final String URL_LOGIN = "estados";
 
 	@Autowired
 	private EstadoServiceImpl estadoServiceImpl;
-	
+
 	@Autowired
 	private EstadoConvertor estadoConvertor;
 
