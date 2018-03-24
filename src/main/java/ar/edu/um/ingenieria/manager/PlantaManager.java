@@ -45,8 +45,8 @@ public class PlantaManager {
 		return plantaConvertor.convertToDTO(plantaServiceImpl.findById(id));
 	}
 
-	public void delete(Integer id) {
-		Planta planta = plantaServiceImpl.findById(id);
+	public void delete(PlantaDTO plantaDTO) {
+		Planta planta = plantaConvertor.convertToEntity(plantaDTO);
 		for (int i = 0; i < planta.getSeguimiento().size(); i++) {
 			seguimientoServiceImpl.remove(planta.getSeguimiento().get(i));
 		}

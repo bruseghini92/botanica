@@ -40,8 +40,8 @@ private static final Logger logger = LoggerFactory.getLogger(ClimaManager.class)
 		return sueloConvertor.convertToDTO(sueloServiceImpl.findById(id));
 	}
 
-	public void delete(Integer id) {
-		Suelo suelo = sueloServiceImpl.findById(id);	
+	public void delete(SueloDTO sueloDTO) {
+		Suelo suelo = sueloConvertor.convertToEntity(sueloDTO);	
 		sueloServiceImpl.remove(suelo);
 	}
 

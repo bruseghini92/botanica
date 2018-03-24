@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/login")
 public class LoginController {
-	private static final Logger logger = LoggerFactory
-			.getLogger(LoginController.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	private static final String URL_LOGIN = "iniciar";
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -31,7 +30,7 @@ public class LoginController {
 		}
 		return URL_LOGIN;
 	}
-	
+
 	private String getErrorMessage(HttpServletRequest request, String key) {
 
 		Exception exception = (Exception) request.getSession().getAttribute(key);
@@ -39,16 +38,16 @@ public class LoginController {
 		String error = "";
 		if (exception instanceof BadCredentialsException) {
 			error = exception.getMessage();
-			if (error.equals("Bad credentials")){
+			if (error.equals("Bad credentials")) {
 				error = "Usuario y/o clave errónea";
 			}
-		
+
 		} else if (exception instanceof LockedException) {
 			error = exception.getMessage();
 		} else {
 			error = "Usuario y/o clave errónea";
 		}
-		
+
 		logger.info("Mensaje de error: {}", error);
 		return error;
 	}

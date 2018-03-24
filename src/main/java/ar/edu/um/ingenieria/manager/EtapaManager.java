@@ -51,5 +51,14 @@ public class EtapaManager {
 		}
 		etapaServiceImpl.remove(etapa);
 	}
+	
+	public List<EtapaDTO> findAll() {
+		try {
+			return etapaConvertor.convertToListDTO(etapaServiceImpl.findAll());
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return null;
+	}
 
 }

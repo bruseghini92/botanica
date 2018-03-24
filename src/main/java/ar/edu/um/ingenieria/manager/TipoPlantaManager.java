@@ -15,24 +15,28 @@ import ar.edu.um.ingenieria.service.impl.TipoPlantaServiceImpl;
 
 @Service
 public class TipoPlantaManager {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(UsuarioManager.class);
-	
+
 	@Autowired
 	private PlantaServiceImpl plantaServiceImpl;
-	
+
 	@Autowired
 	private TipoPlantaConvertor tipoPlantaConvertor;
-	
+
 	@Autowired
 	private TipoPlantaServiceImpl tipoPlantaServiceImpl;
-	
-	public void create (TipoPlantaDTO tipoPlantaDTO) {
+
+	public void create(TipoPlantaDTO tipoPlantaDTO) {
 		TipoPlanta tipoPlanta = tipoPlantaConvertor.convertToEntity(tipoPlantaDTO);
 		tipoPlantaServiceImpl.create(tipoPlanta);
 	}
-	
-	public List<TipoPlantaDTO> showAll(){
+
+	public void update(TipoPlantaDTO tipoPlantaDTO) {
+		tipoPlantaServiceImpl.update(tipoPlantaConvertor.convertToEntity(tipoPlantaDTO));
+	}
+
+	public List<TipoPlantaDTO> showAll() {
 		try {
 			return tipoPlantaConvertor.convertToListDTO(tipoPlantaServiceImpl.findAll());
 		} catch (Exception e) {
@@ -45,10 +49,10 @@ public class TipoPlantaManager {
 		return tipoPlantaConvertor.convertToDTO(tipoPlantaServiceImpl.findById(id));
 	}
 
-	public void delete(Integer id) {
-		TipoPlanta tipoPlanta = tipoPlantaServiceImpl.findById(id);
-		for (int i = 0; i < tipoPlanta.getPlantas().size();i++) {
-		plantaServiceImpl.remove(tipoPlanta.getPlantas().get(i));
+	public void delete(TipoPlantaDTO tipoPlantaDTO) {
+		TipoPlanta tipoPlanta = tipoPlantaConvertor.convertToEntity(tipoPlantaDTO);
+		for (int i = 0; i < tipoPlanta.getPlantas().size(); i++) {
+			plantaServiceImpl.remove(tipoPlanta.getPlantas().get(i));
 		}
 		tipoPlantaServiceImpl.remove(tipoPlanta);
 	}

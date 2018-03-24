@@ -45,8 +45,8 @@ private static final Logger logger = LoggerFactory.getLogger(UsuarioManager.clas
 		return estadoConvertor.convertToDTO(estadoServiceImpl.findById(id));
 	}
 
-	public void delete(Integer id) {
-		Estado estado = estadoServiceImpl.findById(id);
+	public void delete(EstadoDTO estadoDTO) {
+		Estado estado = estadoConvertor.convertToEntity(estadoDTO);
 		for (int i = 0; i < estado.getSeguimientos().size();i++) {
 		seguimientoServiceImpl.remove(estado.getSeguimientos().get(i));
 		}

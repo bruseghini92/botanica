@@ -6,20 +6,20 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ar.edu.um.ingenieria.convertor.EstadoConvertor;
+import ar.edu.um.ingenieria.domain.Usuario;
 import ar.edu.um.ingenieria.dto.EstadoDTO;
-import ar.edu.um.ingenieria.service.impl.EstadoServiceImpl;
+import ar.edu.um.ingenieria.manager.EstadoManager;
 
 @Controller
 @RequestMapping("/estados")
@@ -31,32 +31,25 @@ public class EstadoController {
 	private static final String URL_LOGIN = "estados";
 
 	@Autowired
-	private EstadoServiceImpl estadoServiceImpl;
-
-	@Autowired
-	private EstadoConvertor estadoConvertor;
+	private EstadoManager estadoManager;
 
 	@GetMapping
-	public String indexPage(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		request.setAttribute("Session", session);
-		List<EstadoDTO> estadosDTO = estadoConvertor.convertToListDTO(estadoServiceImpl.findAll());
+	public String indexPage(HttpServletRequest request, HttpServletResponse response,
+			@AuthenticationPrincipal Usuario session, Model model) throws ServletException, IOException {
+		model.addAttribute("session", session);
+		List<EstadoDTO> estadosDTO = estadoManager.showAll();
 		logger.info("Datos de estados:{" + estadosDTO + "}");
-		request.setAttribute("estados", estadosDTO);
-		request.getRequestDispatcher("estados.jsp").forward(request, response);
+		model.addAttribute("estados", estadosDTO);
 		return URL_LOGIN;
 	}
 
 	@GetMapping("/{id}")
-	public String show(@PathVariable Integer id, HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		request.setAttribute("Session", session);
-		EstadoDTO estadoDTO = estadoConvertor.convertToDTO(estadoServiceImpl.findById(id));
+	public String show(@PathVariable Integer id, HttpServletRequest request, HttpServletResponse response,
+			@AuthenticationPrincipal Usuario session, Model model) throws ServletException, IOException {
+		model.addAttribute("session", session);
+		EstadoDTO estadoDTO = estadoManager.findById(id);
 		logger.info("Datos de estados:{" + estadoDTO + "}");
-		request.setAttribute("estados", estadoDTO);
-		request.getRequestDispatcher("estados.jsp").forward(request, response);
+		model.addAttribute("estados", estadoDTO);
 		return URL_LOGIN;
 	}
 

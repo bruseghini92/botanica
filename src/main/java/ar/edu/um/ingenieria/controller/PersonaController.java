@@ -10,7 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ar.edu.um.ingenieria.domain.Persona;
+import ar.edu.um.ingenieria.domain.Usuario;
 import ar.edu.um.ingenieria.service.impl.PersonaServiceImpl;
 import ar.edu.um.ingenieria.service.impl.UsuarioSecurityServiceImpl;
 import ar.edu.um.ingenieria.service.impl.UsuarioServiceImpl;
@@ -42,12 +45,11 @@ public class PersonaController {
 	private UsuarioSecurityServiceImpl usuarioSecurityServiceImpl;
 
 	@GetMapping
-	public String indexPage(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		logger.info("datos de persona: {"
-				+ usuarioServiceImpl.findById(usuarioSecurityServiceImpl.GetIdUser()).getPersona() + "}");
-		request.setAttribute("persona",
-				usuarioServiceImpl.findById(usuarioSecurityServiceImpl.GetIdUser()).getPersona());
+	public String indexPage(HttpServletRequest request, HttpServletResponse response,
+			@AuthenticationPrincipal Usuario session, Model model) throws ServletException, IOException {
+		model.addAttribute("session", session);
+		logger.info("datos de persona: {" + session.getPersona() + "}");
+		request.setAttribute("persona", session.getPersona());
 		request.getRequestDispatcher("persona.jsp").forward(request, response);
 		return URL_LOGIN;
 	}

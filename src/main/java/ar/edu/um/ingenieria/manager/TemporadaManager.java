@@ -15,24 +15,24 @@ import ar.edu.um.ingenieria.service.impl.TemporadaServiceImpl;
 
 @Service
 public class TemporadaManager {
-	
-private static final Logger logger = LoggerFactory.getLogger(UsuarioManager.class);
-	
+
+	private static final Logger logger = LoggerFactory.getLogger(UsuarioManager.class);
+
 	@Autowired
 	private PlantaServiceImpl plantaServiceImpl;
-	
+
 	@Autowired
 	private TemporadaConvertor temporadaConvertor;
-	
+
 	@Autowired
 	private TemporadaServiceImpl temporadaServiceImpl;
-	
-	public void create (TemporadaDTO temporadaDTO) {
+
+	public void create(TemporadaDTO temporadaDTO) {
 		Temporada temporada = temporadaConvertor.convertToEntity(temporadaDTO);
 		temporadaServiceImpl.create(temporada);
 	}
-	
-	public List<TemporadaDTO> showAll(){
+
+	public List<TemporadaDTO> showAll() {
 		try {
 			return temporadaConvertor.convertToListDTO(temporadaServiceImpl.findAll());
 		} catch (Exception e) {
@@ -41,14 +41,18 @@ private static final Logger logger = LoggerFactory.getLogger(UsuarioManager.clas
 		return null;
 	}
 
+	public void update(TemporadaDTO temporadaDTO) {
+		temporadaServiceImpl.update(temporadaConvertor.convertToEntity(temporadaDTO));
+	}
+
 	public TemporadaDTO findById(int id) {
 		return temporadaConvertor.convertToDTO(temporadaServiceImpl.findById(id));
 	}
 
-	public void delete(Integer id) {
-		Temporada temporada = temporadaServiceImpl.findById(id);
-		for (int i = 0; i < temporada.getPlantas().size();i++) {
-		plantaServiceImpl.remove(temporada.getPlantas().get(i));
+	public void delete(TemporadaDTO temporadaDTO) {
+		Temporada temporada = temporadaConvertor.convertToEntity(temporadaDTO);
+		for (int i = 0; i < temporada.getPlantas().size(); i++) {
+			plantaServiceImpl.remove(temporada.getPlantas().get(i));
 		}
 		temporadaServiceImpl.remove(temporada);
 	}

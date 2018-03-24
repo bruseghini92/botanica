@@ -49,18 +49,18 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<c:if test="${empty Session}">
+					<c:if test="${empty session}">
 						<li class="nav-item"><a class="nav-link js-scroll-trigger"
 							href="/botanica/registro">Registrarse</a></li>
 
 						<li class="nav-item"><a class="nav-link js-scroll-trigger"
 							href="/botanica/login">Iniciar Sesi&oacute;n</a></li>
 					</c:if>
-					<c:if test="${not empty Session}">
+					<c:if test="${not empty session}">
 						<li class="nav-item"><a class="nav-link js-scroll-trigger"
 							href="#"><c:out value="${session.user}" /></a></li>
 						<li class="nav-item"><a class="nav-link js-scroll-trigger"
-							href="/logout">Cerrar Sesi&oacute;n</a></li>
+							href="/botanica/logout">Cerrar Sesi&oacute;n</a></li>
 							<li class="nav-item"><a class="nav-link js-scroll-trigger"
 						href="/botanica/seguimientos">Seguimientos</a></li>
 						<li class="nav-item"><a class="nav-link js-scroll-trigger"

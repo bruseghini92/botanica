@@ -50,7 +50,7 @@ public class Usuario implements Serializable, UserDetails {
 	private Rol rol;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Seguimiento> seguimiento;
 
 	@OneToOne(mappedBy = "usuario", fetch = FetchType.LAZY)
@@ -221,7 +221,6 @@ public class Usuario implements Serializable, UserDetails {
 		super();
 	}
 
-	@JsonIgnore
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> authorities = new ArrayList<>();

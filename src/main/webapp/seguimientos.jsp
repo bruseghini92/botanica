@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@page import="ar.edu.um.ingenieria.dto.PlantaDTO"%>
-	<%@page import="java.util.ArrayList"%>
+<%@page import="ar.edu.um.ingenieria.dto.PlantaDTO"%>
+<%@page import="java.util.ArrayList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -63,12 +63,38 @@
 						modelAttribute="seguimientos" role="form"
 						cssClass="form-horizontal" accept-charset="utf-8"
 						action="/botanica/seguimientos">
-						<!-- Agregar lista de plantas y estados para crear nuevo -->
+						<spring:bind path="planta">
+							<label class="control-label col-md-3" for="planta">Planta:</label>
+							<div class="col-md-3">
+								<form:select path="planta" cssClass="form-control">
+									<c:forEach items="${planta}" var="planta">
+										<form:option value="${planta.id}" label="${planta.nombre}" />
+									</c:forEach>
+								</form:select>
+								<c:if test="${status.error}">
+									<span class="text-danger">${status.errorMessage}</span>
+								</c:if>
+							</div>
+						</spring:bind>
+
+						<spring:bind path="estados">
+							<label class="control-label col-md-3" for="estados">Estado:</label>
+							<div class="col-md-3">
+								<form:select path="estados" cssClass="form-control">
+									<c:forEach items="${estados}" var="estados">
+										<form:option value="${estados.id}" label="${estados.nombre}" />
+									</c:forEach>
+								</form:select>
+								<c:if test="${status.error}">
+									<span class="text-danger">${status.errorMessage}</span>
+								</c:if>
+							</div>
+						</spring:bind>
 						<div class="row">
-					<div class="col-md-3">
-						<button type="submit" class="btn btn-primary">Enviar</button>
-					</div>
-				</div>
+							<div class="col-md-3">
+								<button type="submit" class="btn btn-primary">Enviar</button>
+							</div>
+						</div>
 					</form:form>
 				</div>
 			</div>

@@ -28,7 +28,7 @@ private static final Logger logger = LoggerFactory.getLogger(ClimaManager.class)
 		climaServiceImpl.create(clima);
 	}
 	
-	public List<ClimaDTO> showAll(){
+	public List<ClimaDTO> findAll(){
 		try {
 			return climaConvertor.convertToListDTO(climaServiceImpl.findAll());
 		} catch (Exception e) {

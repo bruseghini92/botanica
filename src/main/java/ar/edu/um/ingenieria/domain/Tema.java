@@ -33,7 +33,7 @@ public class Tema implements Serializable{
 	@Column(name = "titulo")
 	private String titulo;
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="usuario_id")
 	private Usuario usuario;
 	
@@ -43,7 +43,7 @@ public class Tema implements Serializable{
 	@Column(name = "texto")
 	private String texto;
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="categoria_id")
 	private Categoria categoria;
 	

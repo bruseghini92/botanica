@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ar.edu.um.ingenieria.convertor.TipoVentaConvertor;
+import ar.edu.um.ingenieria.domain.Usuario;
 import ar.edu.um.ingenieria.dto.TipoVentaDTO;
 import ar.edu.um.ingenieria.manager.TipoVentaManager;
 import ar.edu.um.ingenieria.service.impl.TipoVentaServiceImpl;
@@ -42,22 +44,20 @@ public class TipoVentaAdmController {
 	private TipoVentaConvertor tipoVentaConvertor;
 
 	@GetMapping("/tipoventas")
-	public String indexPage(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		request.setAttribute("Session", session);
+	public String indexPage(HttpServletRequest request, HttpServletResponse response,
+			@AuthenticationPrincipal Usuario session, Model model) throws ServletException, IOException {
+		model.addAttribute("session", session);
 		List<TipoVentaDTO> tipoventas = tipoVentaConvertor.convertToListDTO(tipoVentaServiceImpl.findAll());
 		logger.info("Tipos de ventas:{" + tipoventas + "}");
-		request.setAttribute("tipoventas", tipoventas);
+		model.addAttribute("tipoventas", tipoventas);
 		return "/admin/tipoventas";
 	}
 
 	@GetMapping("/tipoventas/{id}")
-	public String show(@PathVariable Integer id, HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		request.setAttribute("Session", session);
-		request.setAttribute("tipoventas", tipoVentaConvertor.convertToListDTO(tipoVentaServiceImpl.findAll()));
+	public String show(@PathVariable Integer id, HttpServletRequest request, HttpServletResponse response,
+			@AuthenticationPrincipal Usuario session, Model model) throws ServletException, IOException {
+		model.addAttribute("session", session);
+		model.addAttribute("tipoventas", tipoVentaConvertor.convertToListDTO(tipoVentaServiceImpl.findAll()));
 		return "redirect:/admin/tipoventas";
 	}
 
@@ -79,7 +79,7 @@ public class TipoVentaAdmController {
 	public String show(@PathVariable Integer id, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		request.setAttribute("Session", session);
+		model.addAttribute("Session", session);
 		model.addAttribute("tipoventa", tipoVentaServiceImpl.findById(id));
 		return "/admin/tipoventaseditar";
 	}

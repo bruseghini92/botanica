@@ -30,14 +30,14 @@ public class Respuesta implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="temas_id")
 	private Tema tema;
 	
 	@Column(name = "texto")
 	private String texto;
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="usuario_id")
 	private Usuario usuario;
 	

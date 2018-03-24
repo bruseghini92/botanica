@@ -10,23 +10,23 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="roles")
-public class Rol implements Serializable{
+@Table(name = "roles")
+public class Rol implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4414726203663664786L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@Column(name = "rol")
 	private String rol;
-	
+
 	@Column(name = "descripcion")
 	private String descripcion;
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -54,7 +54,7 @@ public class Rol implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -91,7 +91,7 @@ public class Rol implements Serializable{
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Rol [id=" + id + ", rol=" + rol + ", descripcion=" + descripcion + "]";

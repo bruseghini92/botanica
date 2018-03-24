@@ -5,13 +5,13 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,11 +24,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ar.edu.um.ingenieria.convertor.ClimaConvertor;
-import ar.edu.um.ingenieria.convertor.EstadoConvertor;
 import ar.edu.um.ingenieria.convertor.SeguimientoConvertor;
-import ar.edu.um.ingenieria.convertor.TemporadaConvertor;
-import ar.edu.um.ingenieria.convertor.UsuarioConvertor;
+import ar.edu.um.ingenieria.domain.Usuario;
 import ar.edu.um.ingenieria.dto.EstadoDTO;
 import ar.edu.um.ingenieria.dto.EtapaDTO;
 import ar.edu.um.ingenieria.dto.PlantaDTO;
@@ -40,17 +37,15 @@ import ar.edu.um.ingenieria.editor.EtapaEditor;
 import ar.edu.um.ingenieria.editor.PlantaEditor;
 import ar.edu.um.ingenieria.editor.TareaEditor;
 import ar.edu.um.ingenieria.editor.UsuarioEditor;
+import ar.edu.um.ingenieria.manager.ClimaManager;
 import ar.edu.um.ingenieria.manager.EstadoManager;
 import ar.edu.um.ingenieria.manager.EtapaManager;
 import ar.edu.um.ingenieria.manager.PlantaManager;
+import ar.edu.um.ingenieria.manager.SeguimientoManager;
 import ar.edu.um.ingenieria.manager.TareaManager;
+import ar.edu.um.ingenieria.manager.TemporadaManager;
 import ar.edu.um.ingenieria.manager.UsuarioManager;
-import ar.edu.um.ingenieria.service.impl.ClimaServiceImpl;
-import ar.edu.um.ingenieria.service.impl.EstadoServiceImpl;
-import ar.edu.um.ingenieria.service.impl.PlantaServiceImpl;
 import ar.edu.um.ingenieria.service.impl.SeguimientoServiceImpl;
-import ar.edu.um.ingenieria.service.impl.TemporadaServiceImpl;
-import ar.edu.um.ingenieria.service.impl.UsuarioServiceImpl;
 
 @Controller
 @RequestMapping("/admin")
@@ -63,10 +58,10 @@ public class SeguimientoAdmController {
 	private SeguimientoServiceImpl seguimientoServiceImpl;
 
 	@Autowired
-	private EstadoServiceImpl estadoServiceImpl;
+	private PlantaManager plantaManager;
 
 	@Autowired
-	private PlantaManager plantaManager;
+	private SeguimientoManager seguimientoManager;
 
 	@Autowired
 	private EstadoManager estadoManager;
@@ -81,68 +76,49 @@ public class SeguimientoAdmController {
 	private TareaManager tareaManager;
 
 	@Autowired
-	private UsuarioServiceImpl usuarioServiceImpl;
-
-	@Autowired
-	private TemporadaConvertor temporadaConvertor;
-
-	@Autowired
 	private SeguimientoConvertor seguimientoConvertor;
 
 	@Autowired
-	private ClimaServiceImpl climaServiceImpl;
+	private ClimaManager climaManager;
 
 	@Autowired
-	private TemporadaServiceImpl temporadaServiceImpl;
-
-	@Autowired
-	private PlantaServiceImpl plantaServiceImpl;
-
-	@Autowired
-	private UsuarioConvertor usuarioConvertor;
-
-	@Autowired
-	private ClimaConvertor climaConvertor;
-
-	@Autowired
-	private EstadoConvertor estadoConvertor;
+	private TemporadaManager temporadaManager;
 
 	@GetMapping("/seguimientos")
-	public String selectAll(HttpServletRequest request, HttpServletResponse response, Model model) {
-		HttpSession session = request.getSession();
-		request.setAttribute("Session", session);
+	public String selectAll(HttpServletRequest request, HttpServletResponse response,
+			@AuthenticationPrincipal Usuario session, Model model) throws ServletException, IOException {
+		model.addAttribute("session", session);
 		logger.info("AdminController");
-		model.addAttribute("seguimientos", seguimientoServiceImpl.findAll());
+		model.addAttribute("seguimientos", seguimientoManager.showAll());
 		return "/admin/seguimientos";
 	}
 
 	@GetMapping("/seguimientoeditar/{id}")
-	public String show(@PathVariable Integer id, Model model, HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		request.setAttribute("Session", session);
-		model.addAttribute("planta", plantaManager.findById(id));
-		model.addAttribute("usuario", usuarioConvertor.convertToListDTO(usuarioServiceImpl.findAll()));
-		model.addAttribute("estado", estadoConvertor.convertToListDTO(estadoServiceImpl.findAll()));
-		model.addAttribute("etapa", climaConvertor.convertToListDTO(climaServiceImpl.findAll()));
-		model.addAttribute("tarea", temporadaConvertor.convertToListDTO(temporadaServiceImpl.findAll()));
-		return "/admin/plantaeditar";
+	public String show(@PathVariable Integer id, Model model, HttpServletRequest request, HttpServletResponse response,
+			@AuthenticationPrincipal Usuario session) throws ServletException, IOException {
+		model.addAttribute("session", session);
+		model.addAttribute("seguimiento", seguimientoManager.findById(id));
+		model.addAttribute("planta", plantaManager.showAll());
+		model.addAttribute("usuario", usuarioManager.showAll());
+		model.addAttribute("estado", estadoManager.showAll());
+		model.addAttribute("etapa", climaManager.findAll());
+		model.addAttribute("tarea", temporadaManager.showAll());
+		return "/admin/seguimientoeditar";
 	}
 
 	@PostMapping("/seguimientos")
 	public String agregar(@Valid @ModelAttribute("seguimiento") SeguimientoDTO seguimientoDTO, BindingResult result,
-			Model model, HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		request.setAttribute("Session", session);
+			Model model, HttpServletRequest request, HttpServletResponse response,
+			@AuthenticationPrincipal Usuario session) throws ServletException, IOException {
+		model.addAttribute("session", session);
 		logger.info("Result{" + result + "}");
 		logger.info("Ingreso en el controlador POST de edicion CATEGORIAS:{" + seguimientoDTO + "}");
 		if (result.hasErrors()) {
-			model.addAttribute("plantas", plantaServiceImpl.findAll());
-			model.addAttribute("usuarios", usuarioServiceImpl.findAll());
-			model.addAttribute("estados", climaServiceImpl.findAll());
-			model.addAttribute("etapas", temporadaServiceImpl.findAll());
-			model.addAttribute("tareas", temporadaServiceImpl.findAll());
+			model.addAttribute("planta", plantaManager.showAll());
+			model.addAttribute("usuario", usuarioManager.showAll());
+			model.addAttribute("estado", estadoManager.showAll());
+			model.addAttribute("etapa", climaManager.findAll());
+			model.addAttribute("tarea", temporadaManager.showAll());
 			return "/admin/seguimientoeditar";
 		}
 		seguimientoServiceImpl.update(seguimientoConvertor.convertToEntity(seguimientoDTO));
@@ -152,7 +128,7 @@ public class SeguimientoAdmController {
 	@GetMapping("/seguimientoborrar/{id}")
 	public String borrar(@PathVariable Integer id, RedirectAttributes redirectAttributes, HttpServletRequest request,
 			HttpServletResponse response) {
-		plantaManager.delete(id);
+		plantaManager.delete(plantaManager.findById(id));
 		redirectAttributes.addFlashAttribute("mensaje", "planta borrada");
 		redirectAttributes.addFlashAttribute("estilo", "alert-warning");
 		return "redirect:/admin/seguimientos";

@@ -16,7 +16,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import com.fasterxml.jackson.annotation.JsonFormat;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -52,12 +54,12 @@ public class Planta implements Serializable {
 	private Clima clima;
 
 	@Temporal(TemporalType.TIME)
-	@JsonFormat(pattern="HH:mm:ss")
+	@DateTimeFormat(pattern = "HH:mm:ss")
 	@Column(name = "tiempo_riego")
 	private Date tiempoRiego;
-	
+
 	@JsonIgnore
-	@OneToMany (mappedBy="planta",fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "planta", fetch = FetchType.LAZY)
 	private List<Seguimiento> seguimiento;
 
 	public Integer getId() {
@@ -123,7 +125,7 @@ public class Planta implements Serializable {
 	public void setTiempoRiego(Date tiempoRiego) {
 		this.tiempoRiego = tiempoRiego;
 	}
-	
+
 	public List<Seguimiento> getSeguimiento() {
 		return seguimiento;
 	}
@@ -135,7 +137,7 @@ public class Planta implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -171,11 +173,10 @@ public class Planta implements Serializable {
 				return false;
 		} else if (!descripcion.equals(other.descripcion))
 			return false;
-		/*if (estado == null) {
-			if (other.estado != null)
-				return false;
-		} else if (!estado.equals(other.estado))
-			return false;*/
+		/*
+		 * if (estado == null) { if (other.estado != null) return false; } else if
+		 * (!estado.equals(other.estado)) return false;
+		 */
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -213,12 +214,12 @@ public class Planta implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Planta [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", tipo=" + tipo
 				+ ", temporada=" + temporada + ", suelo=" + suelo + ", clima=" + clima + ", tiempoRiego=" + tiempoRiego
-				+"]";
+				+ "]";
 	}
 
 	public Planta() {

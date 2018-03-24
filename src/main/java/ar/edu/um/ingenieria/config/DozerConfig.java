@@ -43,8 +43,8 @@ public class DozerConfig {
 		@Override
 		protected void configure() {
 			mapping(Seguimiento.class, SeguimientoDTO.class);
-			mapping(Etapa.class, EtapaDTO.class);
 			mapping(Estado.class, EstadoDTO.class);
+			mapping(Etapa.class, EtapaDTO.class);
 			mapping(Tarea.class, TareaDTO.class);
 		}
 	};
