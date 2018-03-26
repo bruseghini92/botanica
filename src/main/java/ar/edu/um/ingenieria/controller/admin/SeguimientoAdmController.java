@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ar.edu.um.ingenieria.convertor.SeguimientoConvertor;
 import ar.edu.um.ingenieria.domain.Usuario;
 import ar.edu.um.ingenieria.dto.EstadoDTO;
 import ar.edu.um.ingenieria.dto.EtapaDTO;
@@ -45,17 +44,13 @@ import ar.edu.um.ingenieria.manager.SeguimientoManager;
 import ar.edu.um.ingenieria.manager.TareaManager;
 import ar.edu.um.ingenieria.manager.TemporadaManager;
 import ar.edu.um.ingenieria.manager.UsuarioManager;
-import ar.edu.um.ingenieria.service.impl.SeguimientoServiceImpl;
 
 @Controller
 @RequestMapping("/admin")
-@Secured({ "ROLE_ADMIN" })
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class SeguimientoAdmController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SeguimientoAdmController.class);
-
-	@Autowired
-	private SeguimientoServiceImpl seguimientoServiceImpl;
 
 	@Autowired
 	private PlantaManager plantaManager;
@@ -74,9 +69,6 @@ public class SeguimientoAdmController {
 
 	@Autowired
 	private TareaManager tareaManager;
-
-	@Autowired
-	private SeguimientoConvertor seguimientoConvertor;
 
 	@Autowired
 	private ClimaManager climaManager;
@@ -109,10 +101,11 @@ public class SeguimientoAdmController {
 	@PostMapping("/seguimientos")
 	public String agregar(@Valid @ModelAttribute("seguimiento") SeguimientoDTO seguimientoDTO, BindingResult result,
 			Model model, HttpServletRequest request, HttpServletResponse response,
-			@AuthenticationPrincipal Usuario session) throws ServletException, IOException {
+			RedirectAttributes redirectAttributes, @AuthenticationPrincipal Usuario session)
+			throws ServletException, IOException {
 		model.addAttribute("session", session);
-		logger.info("Result{" + result + "}");
-		logger.info("Ingreso en el controlador POST de edicion CATEGORIAS:{" + seguimientoDTO + "}");
+		logger.info("Result{" + result + "}" + "Ingreso en el controlador POST de edicion CATEGORIAS:{" + seguimientoDTO
+				+ "}");
 		if (result.hasErrors()) {
 			model.addAttribute("planta", plantaManager.showAll());
 			model.addAttribute("usuario", usuarioManager.showAll());
@@ -121,15 +114,17 @@ public class SeguimientoAdmController {
 			model.addAttribute("tarea", temporadaManager.showAll());
 			return "/admin/seguimientoeditar";
 		}
-		seguimientoServiceImpl.update(seguimientoConvertor.convertToEntity(seguimientoDTO));
-		return "redirect:/admin/plantas";
+		seguimientoManager.update(seguimientoDTO);
+		redirectAttributes.addFlashAttribute("mensaje", "seguimiento actualizado");
+		redirectAttributes.addFlashAttribute("estilo", "alert-warning");
+		return "redirect:/admin/seguimientos";
 	}
 
 	@GetMapping("/seguimientoborrar/{id}")
 	public String borrar(@PathVariable Integer id, RedirectAttributes redirectAttributes, HttpServletRequest request,
 			HttpServletResponse response) {
-		plantaManager.delete(plantaManager.findById(id));
-		redirectAttributes.addFlashAttribute("mensaje", "planta borrada");
+		seguimientoManager.delete(seguimientoManager.findById(id));
+		redirectAttributes.addFlashAttribute("mensaje", "seguimiento borrado");
 		redirectAttributes.addFlashAttribute("estilo", "alert-warning");
 		return "redirect:/admin/seguimientos";
 	}

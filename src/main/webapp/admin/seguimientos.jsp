@@ -44,14 +44,23 @@
 						<td>${seguimientos.estado.nombre}</td>
 						<td>${seguimientos.etapa.nombre}</td>
 						<td>${seguimientos.tarea.nombre}</td>
-						<td>${seguimientos.ultimoRiego}</td>
-						<td>${seguimientos.fechaInicio}</td>
-						<td>${seguimientos.fechaAbono}</td>
-						<td>${seguimientos.fechaPoda}</td>
-						<td>${seguimientos.fechaCosecha}</td>	
-						<td><a href="/botanica/admin/seguimientoeditar/${seguimientos.id}"
+						<td><fmt:formatDate value="${seguimientos.ultimoRiego}"
+								pattern="dd/MM/yyyy HH:mm:ss" /></td>
+						<td><fmt:formatDate value="${seguimiento.proximoRiego}"
+								pattern="dd/MM/yyyy HH:mm:ss" /></td>
+						<td><fmt:formatDate value="${seguimientos.fechaInicio}"
+								pattern="dd/MM/yyyy" /></td>
+						<td><fmt:formatDate value="${seguimientos.fechaAbono}"
+								pattern="dd/MM/yyyy" /></td>
+						<td><fmt:formatDate value="${seguimientos.fechaPoda}"
+								pattern="dd/MM/yyyy" /></td>
+						<td><fmt:formatDate value="${seguimientos.fechaCosecha}"
+								pattern="dd/MM/yyyy" /></td>
+						<td><a
+							href="/botanica/admin/seguimientoeditar/${seguimientos.id}"
 							class="btn btn-success">Editar</a> <a
-							href="/botanica/admin/seguimientoborrar/${seguimientos.id}" class="btn btn-danger">Borrar</a></td>
+							href="/botanica/admin/seguimientoborrar/${seguimientos.id}"
+							class="btn btn-danger">Borrar</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

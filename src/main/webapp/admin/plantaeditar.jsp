@@ -11,9 +11,13 @@
 		<div class="col-md-12">
 			<h2>Editar Planta</h2>
 
-			<form:form method="POST" data-toggle="validator" id="form" action="/botanica/admin/plantas"
-				modelAttribute="planta" role="form" cssClass="form-horizontal"
-				accept-charset="utf-8">
+			<form:form method="POST" data-toggle="validator" id="form"
+				action="/botanica/admin/plantas" modelAttribute="planta" role="form"
+				cssClass="form-horizontal" accept-charset="utf-8">
+
+				<spring:bind path="id">
+					<form:hidden cssClass="form-control" path="id" placeholder="Id" />
+				</spring:bind>
 
 				<spring:bind path="nombre">
 					<div class="form-group ${status.error ? 'has-error' : '' }">
@@ -29,7 +33,8 @@
 				</spring:bind>
 
 				<spring:bind path="suelo">
-					<label class="control-label col-md-3" for="suelo">Tipo de suelo:</label>
+					<label class="control-label col-md-3" for="suelo">Tipo de
+						suelo:</label>
 					<div class="col-md-3">
 						<form:select path="suelo" cssClass="form-control">
 							<c:forEach items="${suelo}" var="suelo">
@@ -86,20 +91,21 @@
 
 				<spring:bind path="tiempoRiego">
 					<div class="form-group ${status.error ? 'has-error' : '' }">
-						<label class="control-label col-md-3"
-							for="tiempoRiego">Tiempo de Riego:</label>
+						<label class="control-label col-md-3" for="tiempoRiego">Tiempo
+							de Riego:</label>
 						<div class="col-md-7">
-							 <form:input cssClass="form-control" path="tiempoRiego"
-								required="required"/> 
+							<form:input cssClass="form-control" path="tiempoRiego"
+								placeholder="HH:mm:ss" required="required" />
 							<c:if test="${status.error}">
 								<span class="text-danger">${status.errorMessage}</span>
 							</c:if>
 						</div>
 					</div>
 				</spring:bind>
-				
+
 				<spring:bind path="tipo">
-					<label class="control-label col-md-3" for="tipo">Tipo de planta:</label>
+					<label class="control-label col-md-3" for="tipo">Tipo de
+						planta:</label>
 					<div class="col-md-3">
 						<form:select path="tipo" cssClass="form-control">
 							<c:forEach items="${tipo}" var="tipo">

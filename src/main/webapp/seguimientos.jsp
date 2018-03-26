@@ -17,9 +17,7 @@
 				<div class="panel-heading">
 					<div class="panel-title">Seguimientos</div>
 				</div>
-
 				<div style="padding-top: 30px" class="panel-body">
-
 					<div style="display: none" id="login-alert"
 						class="alert alert-danger col-sm-12"></div>
 					<table>
@@ -35,67 +33,32 @@
 							<th>Fecha Poda</th>
 							<th>Fecha Cosecha</th>
 						</tr>
-						<c:forEach items="${seguimientos}" var="seguimientos">
+						<c:forEach items="${seguimiento}" var="seguimiento">
 							<tr>
-								<td>${seguimientos.planta.nombre}</td>
-								<td>${seguimientos.estado.nombre}</td>
-								<td>${seguimientos.etapa.nombre}</td>
-								<td>${seguimientos.tarea.nombre}</td>
-								<td><fmt:formatDate value="${seguimientos.ultimoRiego}"
+								<td>${seguimiento.planta.nombre}</td>
+								<td>${seguimiento.estado.nombre}</td>
+								<td>${seguimiento.etapa.nombre}</td>
+								<td>${seguimiento.tarea.nombre}</td>
+								<td><fmt:formatDate value="${seguimiento.ultimoRiego}"
 										pattern="dd/MM/yyyy HH:mm:ss" /></td>
-								<td><fmt:formatDate value="${seguimientos.proximoRiego}"
+								<td><fmt:formatDate value="${seguimiento.proximoRiego}"
 										pattern="dd/MM/yyyy HH:mm:ss" /></td>
-								<td><fmt:formatDate value="${seguimientos.fechaInicio}"
+								<td><fmt:formatDate value="${seguimiento.fechaInicio}"
 										pattern="dd/MM/yyyy" /></td>
-								<td><fmt:formatDate value="${seguimientos.fechaAbono}"
+								<td><fmt:formatDate value="${seguimiento.fechaAbono}"
 										pattern="dd/MM/yyyy" /></td>
-								<td><fmt:formatDate value="${seguimientos.fechaPoda}"
+								<td><fmt:formatDate value="${seguimiento.fechaPoda}"
 										pattern="dd/MM/yyyy" /></td>
-								<td><fmt:formatDate value="${seguimientos.fechaCosecha}"
+								<td><fmt:formatDate value="${seguimiento.fechaCosecha}"
 										pattern="dd/MM/yyyy" /></td>
 								<td><a type="button" class="btn btn-primary"
-									href="seguimientos/${seguimientos.id}/${seguimientos.tarea.nombre}">Realizar
+									href="/botanica/seguimientos/${seguimiento.id}/${seguimiento.tarea.nombre}">Realizar
 										Tarea</a></td>
 							</tr>
 						</c:forEach>
 					</table>
-					<form:form method="POST" data-toggle="validator" id="form"
-						modelAttribute="seguimientos" role="form"
-						cssClass="form-horizontal" accept-charset="utf-8"
-						action="/botanica/seguimientos">
-						<spring:bind path="planta">
-							<label class="control-label col-md-3" for="planta">Planta:</label>
-							<div class="col-md-3">
-								<form:select path="planta" cssClass="form-control">
-									<c:forEach items="${planta}" var="planta">
-										<form:option value="${planta.id}" label="${planta.nombre}" />
-									</c:forEach>
-								</form:select>
-								<c:if test="${status.error}">
-									<span class="text-danger">${status.errorMessage}</span>
-								</c:if>
-							</div>
-						</spring:bind>
-
-						<spring:bind path="estados">
-							<label class="control-label col-md-3" for="estados">Estado:</label>
-							<div class="col-md-3">
-								<form:select path="estados" cssClass="form-control">
-									<c:forEach items="${estados}" var="estados">
-										<form:option value="${estados.id}" label="${estados.nombre}" />
-									</c:forEach>
-								</form:select>
-								<c:if test="${status.error}">
-									<span class="text-danger">${status.errorMessage}</span>
-								</c:if>
-							</div>
-						</spring:bind>
-						<div class="row">
-							<div class="col-md-3">
-								<button type="submit" class="btn btn-primary">Enviar</button>
-							</div>
-						</div>
-					</form:form>
+					<a type="button" class="btn btn-primary" href="/botanica/seguimientos/create">Crear
+						nuevo seguimiento</a>
 				</div>
 			</div>
 		</div>

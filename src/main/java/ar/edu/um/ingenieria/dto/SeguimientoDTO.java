@@ -10,7 +10,6 @@ public class SeguimientoDTO {
 
 	private Integer id;
 
-	@NotNull
 	private UsuarioDTO usuario;
 
 	@NotNull
@@ -19,33 +18,25 @@ public class SeguimientoDTO {
 	@NotNull
 	private EstadoDTO estado;
 
-	@NotNull
 	private EtapaDTO etapa;
-
-	@NotNull
+	
 	private TareaDTO tarea;
 
-	@NotNull
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private Date ultimoRiego;
 
-	@NotNull
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private Date proximoRiego;
-
-	@NotNull
+	
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date fechaInicio;
-
-	@NotNull
+	
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date fechaAbono;
-
-	@NotNull
+	
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date fechaPoda;
 
-	@NotNull
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date fechaCosecha;
 

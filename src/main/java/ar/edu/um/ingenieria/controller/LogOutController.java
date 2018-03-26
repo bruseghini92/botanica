@@ -22,6 +22,7 @@ public class LogOutController {
 	@GetMapping
 	public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		logger.info("Cerrando sesion" + auth);
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}

@@ -85,15 +85,16 @@
 						<label class="control-label col-md-3"
 							for="persona.fechaNacimiento">Edad:</label>
 						<div class="col-md-7">
-							 <form:input cssClass="form-control" path="persona.fechaNacimiento"
-								placeholder="dd-MM-yyyy" required="required"/> 
+							<form:input cssClass="form-control"
+								path="persona.fechaNacimiento" placeholder="dd-MM-yyyy"
+								required="required" />
 							<c:if test="${status.error}">
 								<span class="text-danger">${status.errorMessage}</span>
 							</c:if>
 						</div>
 					</div>
 				</spring:bind>
-				
+
 				<spring:bind path="rol">
 					<label class="control-label col-md-3" for="rol">Tipo de
 						Usuario:</label>

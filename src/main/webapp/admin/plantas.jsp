@@ -41,7 +41,7 @@
 						<td>${plantas.clima.nombre}</td>
 						<td>${plantas.temporada.nombre}</td>
 						<td>${plantas.descripcion}</td>
-						<td>${plantas.tiempoRiego}</td>
+						<td><fmt:formatDate value="${plantas.tiempoRiego}" pattern="HH:mm" /></td>
 						<td>${plantas.tipo.nombre}</td>
 						<td><a href="/botanica/admin/plantaeditar/${plantas.id}"
 							class="btn btn-success">Editar</a> <a

@@ -19,8 +19,6 @@ import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name = "plantas")
 public class Planta implements Serializable {
@@ -58,7 +56,6 @@ public class Planta implements Serializable {
 	@Column(name = "tiempo_riego")
 	private Date tiempoRiego;
 
-	@JsonIgnore
 	@OneToMany(mappedBy = "planta", fetch = FetchType.LAZY)
 	private List<Seguimiento> seguimiento;
 
@@ -173,10 +170,6 @@ public class Planta implements Serializable {
 				return false;
 		} else if (!descripcion.equals(other.descripcion))
 			return false;
-		/*
-		 * if (estado == null) { if (other.estado != null) return false; } else if
-		 * (!estado.equals(other.estado)) return false;
-		 */
 		if (id == null) {
 			if (other.id != null)
 				return false;

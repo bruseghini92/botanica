@@ -10,16 +10,13 @@ import org.springframework.stereotype.Service;
 import ar.edu.um.ingenieria.convertor.PlantaConvertor;
 import ar.edu.um.ingenieria.domain.Planta;
 import ar.edu.um.ingenieria.dto.PlantaDTO;
+import ar.edu.um.ingenieria.dto.SeguimientoDTO;
 import ar.edu.um.ingenieria.service.impl.PlantaServiceImpl;
-import ar.edu.um.ingenieria.service.impl.SeguimientoServiceImpl;
 
 @Service
 public class PlantaManager {
 
-	private static final Logger logger = LoggerFactory.getLogger(UsuarioManager.class);
-
-	@Autowired
-	private SeguimientoServiceImpl seguimientoServiceImpl;
+	private static final Logger logger = LoggerFactory.getLogger(PlantaManager.class);
 
 	@Autowired
 	private PlantaConvertor plantaConvertor;
@@ -27,12 +24,16 @@ public class PlantaManager {
 	@Autowired
 	private PlantaServiceImpl plantaServiceImpl;
 
+	@Autowired
+	private SeguimientoManager seguimientoManager;
+
 	public void create(PlantaDTO plantaDTO) {
-		Planta planta = plantaConvertor.convertToEntity(plantaDTO);
-		plantaServiceImpl.create(planta);
+		logger.info("Planta MANAGER create");
+		plantaServiceImpl.create(plantaConvertor.convertToEntity(plantaDTO));
 	}
 
 	public List<PlantaDTO> showAll() {
+		logger.info("Planta MANAGER showAll");
 		try {
 			return plantaConvertor.convertToListDTO(plantaServiceImpl.findAll());
 		} catch (Exception e) {
@@ -42,15 +43,25 @@ public class PlantaManager {
 	}
 
 	public PlantaDTO findById(Integer id) {
+		logger.info("Planta MANAGER findById");
 		return plantaConvertor.convertToDTO(plantaServiceImpl.findById(id));
 	}
 
-	public void delete(PlantaDTO plantaDTO) {
-		Planta planta = plantaConvertor.convertToEntity(plantaDTO);
-		for (int i = 0; i < planta.getSeguimiento().size(); i++) {
-			seguimientoServiceImpl.remove(planta.getSeguimiento().get(i));
+	public void delete(Integer id) {
+		logger.info("Planta MANAGER delete");
+		int i = 0;
+		Planta planta = plantaConvertor.convertToEntity(this.findById(id));
+		List<SeguimientoDTO> seguimiento = seguimientoManager.findByPlanta(planta);
+		while (i < seguimiento.size()) {
+			seguimientoManager.delete(seguimiento.get(i));
+			i++;
 		}
 		plantaServiceImpl.remove(planta);
+	}
+
+	public void update(PlantaDTO plantaDTO) {
+		logger.info("Planta MANAGER update");
+		plantaServiceImpl.update(plantaConvertor.convertToEntity(plantaDTO));
 	}
 
 }

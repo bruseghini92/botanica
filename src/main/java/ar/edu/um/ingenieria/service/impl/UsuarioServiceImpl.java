@@ -17,9 +17,6 @@ public class UsuarioServiceImpl extends ServiceImpl<Usuario, Integer> {
 	private static final Logger logger = LoggerFactory.getLogger(UsuarioServiceImpl.class);
 
 	@Autowired
-	private UsuarioServiceImpl usuarioServiceImpl;
-
-	@Autowired
 	private PersonaServiceImpl personaServiceImpl;
 
 	@Override
@@ -55,15 +52,15 @@ public class UsuarioServiceImpl extends ServiceImpl<Usuario, Integer> {
 
 	public void create(Persona persona, Usuario usuario) {
 		logger.info("A verga"+usuario + persona);
-		usuarioServiceImpl.create(usuario);	
+		this.create(usuario);	
 		persona.setUsuario(usuario);
 		personaServiceImpl.create(persona);	
 	}
 
 	public void delete(Integer id) {
-		Usuario usuario = usuarioServiceImpl.findById(id);
+		Usuario usuario = this.findById(id);
 		personaServiceImpl.remove(usuario.getPersona());
-		usuarioServiceImpl.remove(usuario);
+		super.remove(usuario);
 	}
 
 }

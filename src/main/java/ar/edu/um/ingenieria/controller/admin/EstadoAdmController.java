@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +27,7 @@ import ar.edu.um.ingenieria.service.impl.EstadoServiceImpl;
 
 @Controller
 @RequestMapping("/admin")
-@Secured({ "ROLE_ADMIN" })
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class EstadoAdmController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SeguimientoController.class);

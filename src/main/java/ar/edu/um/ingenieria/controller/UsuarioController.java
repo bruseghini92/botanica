@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +24,6 @@ import ar.edu.um.ingenieria.service.impl.UsuarioServiceImpl;
 
 @Controller
 @RequestMapping("/usuario")
-@Secured({ "ROLE_USER", "ROLE_VENDEDOR", "ROLE_ADMIN" })
 public class UsuarioController {
 
 	private static final String URL_LOGIN = "usuario";
@@ -37,7 +35,7 @@ public class UsuarioController {
 
 	@Autowired
 	private UsuarioSecurityServiceImpl usuarioSecurityServiceImpl;
-	
+
 	@Autowired
 	private UsuarioManager usuarioManager;
 

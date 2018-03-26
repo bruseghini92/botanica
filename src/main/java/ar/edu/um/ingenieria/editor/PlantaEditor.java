@@ -18,7 +18,7 @@ public class PlantaEditor extends PropertyEditorSupport {
 
 	@Override
 	public void setAsText(String text) throws IllegalArgumentException {
-		int id = Integer.parseInt(text);
+		Integer id = Integer.parseInt(text);
 		PlantaDTO plantaDTO = id == 0 ? null : plantaManager.findById(id);
 		setValue(plantaDTO);
 	}

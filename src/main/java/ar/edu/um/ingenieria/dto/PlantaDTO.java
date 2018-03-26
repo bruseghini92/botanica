@@ -1,6 +1,6 @@
 package ar.edu.um.ingenieria.dto;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class PlantaDTO {
 
 	private Integer id;
+	
 	@NotNull
 	@Size(min = 2, max = 45)
 	private String nombre;

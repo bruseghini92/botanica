@@ -68,7 +68,7 @@
 								Volver</a>
 						</div>
 						<div class="col-lg-6  text-center">
-							<a href="<c:url value="/"/>" class="btn btn-success btn-block"><span
+							<a href="<c:url value="/default"/>" class="btn btn-success btn-block"><span
 								class="glyphicon glyphicon-home" aria-hidden="true"></span>
 								Inicio</a>
 						</div>

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.um.ingenieria.convertor.SeguimientoConvertor;
-import ar.edu.um.ingenieria.domain.Seguimiento;
+import ar.edu.um.ingenieria.domain.Planta;
 import ar.edu.um.ingenieria.domain.Usuario;
 import ar.edu.um.ingenieria.dto.SeguimientoDTO;
 import ar.edu.um.ingenieria.service.impl.SeguimientoServiceImpl;
@@ -53,6 +53,10 @@ public class SeguimientoManager {
 		seguimientoServiceImpl.transplantar(seguimientoConvertor.convertToEntity(seguimientoDTO));
 	}
 
+	public void sembrar(SeguimientoDTO seguimientoDTO) {
+		seguimientoServiceImpl.sembrado(seguimientoConvertor.convertToEntity(seguimientoDTO));
+	}
+
 	public void sueloPreparado(SeguimientoDTO seguimientoDTO) {
 		seguimientoServiceImpl.sueloPreparado(seguimientoConvertor.convertToEntity(seguimientoDTO));
 	}
@@ -64,14 +68,17 @@ public class SeguimientoManager {
 	public List<SeguimientoDTO> findByUser(Usuario usuario) {
 		return seguimientoConvertor.convertToListDTO(seguimientoServiceImpl.findByUser(usuario.getId()));
 	}
+	
+	public List<SeguimientoDTO> findByPlanta(Planta planta) {
+		return seguimientoConvertor.convertToListDTO(seguimientoServiceImpl.findByPlanta(planta.getId()));
+	}
 
 	public SeguimientoDTO findById(Integer id) {
 		return seguimientoConvertor.convertToDTO(seguimientoServiceImpl.findById(id));
 	}
 
-	public void delete(Integer id) {
-		Seguimiento seguimiento = seguimientoServiceImpl.findById(id);
-		seguimientoServiceImpl.remove(seguimiento);
+	public void delete(SeguimientoDTO seguimientoDTO) {
+		seguimientoServiceImpl.remove(seguimientoConvertor.convertToEntity(seguimientoDTO));
 	}
 
 	public void update(SeguimientoDTO seguimientoDTO) {
